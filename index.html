@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="./css/estilos.css" rel="stylesheet">
+    <link href="./css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            
+            <div class="row">
+              <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                <img src="./img/Logo-login.png" class="img-thumbnail">
+              </div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 id="Titulo" class="h4 text-blue-900 mb-4">Iniciar Sesión</h1>
+                  </div>
+                  <form id="formLogin" class="user">
+                    <div class="form-group">
+                      <label class="useri" for="">Usuario</label>
+                      <input type="text" class="form-control" placeholder="Usuario" id="nombreUsuario"></div>
+                    <div class="form-group">
+                      <label class="contra" for="">Contraseña</label>
+                      <input type="password" class="form-control" placeholder="Contraseña" id="clave">
+                    </div>
+                    <input type="submit" value="Iniciar" class="btn btn-primary">
+                    <hr>
+                  </form>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script>
+      formLogin.addEventListener('submit',(target)=>{
+        target.preventDefault()
+        let nombreUsuario = document.getElementById('nombreUsuario').value
+        let clave = document.getElementById('clave').value
+        let datos = {
+          nombreUsuario: nombreUsuario,
+          clave: clave
+        }
+        let opciones = {
+          method:"POST",
+          headers: {
+          'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(datos)
+        }
+
+        fetch("http://localhost/apiFerreteria/api/usuarios/login.php", opciones)
+        .then(response=>response.json())
+        .then(data=>{
+          if (data.code === 0){
+            window.location.replace("./paginas/pagina2.html")
+          }else{
+            alert(data.error)
+          }
+        })
+
+
+      })
+    </script>
+
+</body>
+</html>
