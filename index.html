@@ -64,17 +64,17 @@
           body: JSON.stringify(datos)
         }
 
-        fetch("http://localhost/apiFerreteria/api/usuarios/login.php", opciones)
+        fetch("http://localhost:8080/back-end/api/usuarios/login.php", opciones)
         .then(response=>response.json())
         .then(data=>{
           if (data.code === 0){
-            window.location.replace("./paginas/pagina2.html")
+            if(data.idRol == 2){
+              window.location.replace("./paginas/indexvendedor.html")
+            }
           }else{
             alert(data.error)
           }
         })
-
-
       })
     </script>
 
