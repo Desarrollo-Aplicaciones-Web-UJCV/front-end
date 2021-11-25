@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/estilos.css" rel="stylesheet">
+    <title>Modificar Usuario</title>
+</head>
+<body>
+
+    <br>
+    <form action="">
+        <div class="content">
+            <div class="row">
+              <div class="col-lg-6 m-auto">
+                <div class="card">
+                  <div class="card-header">
+                    Modificar usuario
+                  </div>
+                  <div class="card-body">
+                    <form class="" action="" method="">
+                      <div class="form-group">
+                        <label for="">Nombre</label>
+                        <input type="text" placeholder="Ingrese nombre" class="form-control" name="nombre" id="nombre" value="">
+                      </div>
+                      <div class="form-group">
+                        <label for="">Correo</label>
+                        <input type="text" placeholder="Ingrese correo" class="form-control" name="correo" id="correo" value="">          
+                      </div>
+                      <div class="form-group">
+                        <label for="">Usuario</label>
+                        <input type="text" placeholder="Ingrese usuario" class="form-control" name="usuario" id="nombreusuario" value="">
+                      </div>
+                      <div class="form-group">
+                        <label>Rol</label>
+                        <select name="" id="idRol" class="form-control">
+                            <option value="">Administrador</option>
+                            <option value="">Vendedor</option>
+                        </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Editar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>       
+
+    </form>
+
+</body>
+</html>
+
+<script>
+    document.getElementById('modificarUsuario').addEventListener('click', putUser);
+
+    async function putUser(){
+        console.log("Llego");
+        const create = await fetch("http://localhost/back-end/models/Usuario.php",{ 
+            method: 'Put',
+            body: JSON.stringify({
+                nombre: nombre.value,
+                correo: correo.value,
+                nombreUsuario: nombreUsuario.value,
+                idRol: idRol.value,
+        }),     
+        })
+    .then(response => response.json())
+    .then(json => console.log(json));
+    } 
+
+</script>
