@@ -220,7 +220,7 @@
                                         <td>${element.nombreUsuario}</td>
                                         <td>${element.rol}</td>
                                         <a href="modificarUsuario.html?id=${element.id}" class="btn btn-primary">Modificar</a>
-                                        <a id="eliminar" onclick="borrar()" class="btn btn-danger">Eliminar</a>
+                                        <a onclick="eliminarUsuario(event, ${element.id})" class="btn btn-danger">Eliminar</a>
                                         `
                 listaUsuarios.appendChild(tableRow)
             });
@@ -230,6 +230,13 @@
         
     }
     getData()
+
+    function eliminarUsuario(event,id){
+        fetch(`http://localhost/back-end/api/usuarios/delete.php?id=${id}`).then(response => response.json()).then((data) => {
+            event.target.parentElement.remove()
+            alert(data.message)
+        })
+    }
 
     
 
