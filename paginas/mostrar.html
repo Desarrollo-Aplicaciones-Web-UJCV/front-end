@@ -47,17 +47,17 @@
 
         function getData(){
             fetch("http://localhost/back-end/api/usuarios/read.php")
-            .then(res=>res.text)
+            .then(res=>res.json())
             .then(data=>{
-                data.forEach(element => {
-                listaUsuarios.innerHTML +=
-                <tr>
-                    <td class="">${element.nombre}</td>
-                    <td class="">${element.correo}</td>
-                    <td class="">${element.nombreUsuario}</td>
-                    <td class="">${element.idRol}</td>
-                    <td><button onclick = "modificarUsuario(${user,idusuario})" type="submit" id=""></button></td>
-                </tr>
+                data.data.forEach(element => {
+                    let tableRow = document.createElement('tr')
+                    tableRow.innerHTML =  ` <td>${element.nombre}</td> 
+                                            <td>${element.correo}</td>
+                                            <td>${element.nombreUsuario}</td>
+                                            <td>${element.rol}</td>
+                                            <button>Modificar</button>
+                                            <button>Eliminar</button>`
+                    listaUsuarios.appendChild(tableRow)
                 });
 
             })
