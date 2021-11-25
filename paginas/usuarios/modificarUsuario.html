@@ -1,3 +1,6 @@
+</body>
+</html>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -134,15 +137,14 @@
                     <!-- Begin Page Content -->
 
     <!-- Content Row Modificar -->
-     <form action="">
-        <div class="content">
+        <div class="content" >
             <div class="row">
               <div class="col-lg-6 m-auto">
                 <div class="card">
                   <div class="card-header">
                     </div>
                   <div class="card-body">
-                    <form class="" id="formModificar" action="" method="">
+                    <form class="" id="formModificar">
                       <div class="form-group">
                         <label for="">Nombre</label>
                         <input type="text" placeholder="Ingrese nombre" class="form-control" name="nombre" id="nombre" value="">
@@ -160,8 +162,8 @@
                         <select name="" id="idRol" class="form-control">
                         </select>
                       </div>
-                      <button onclick="modificarUsuario()" class="btn btn-primary">Editar</button>
-                      <a href="mostrarUsuario.html" class="btn btn-danger">Regresar</a>
+                      <button class="btn btn-primary">Editar</button>
+                      <a href="mostrarUsuarios.html" class="btn btn-danger">Regresar</a>
                     </form>
                   </div>
                 </div>
@@ -169,7 +171,6 @@
             </div>
         </div>       
 
-    </form>
 
     <!-- End of Page Modificar -->
 
@@ -222,13 +223,12 @@
         id = param.get("id")        
     }
     obtenerId();
-    
-    /*var formModificar = document.getElementById('formModificar')
 
+    
     formModificar.addEventListener("submit", (target)=>{
         target.preventDefault()
-        modificarUsuario();
-    })*/
+        modificarUsuario()
+    })
 
     function obtenerUsuario(){
         let nombre = document.getElementById("nombre")
