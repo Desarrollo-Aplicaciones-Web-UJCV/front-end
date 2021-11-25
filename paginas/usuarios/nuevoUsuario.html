@@ -131,7 +131,7 @@
     <!-- Content Row -->
          <div class="row">
                 <div class="col-lg-6 m-auto">
-                    <form action="" method="post" id="formAgregar" autocomplete="off">
+                    <form id="formAgregar" autocomplete="off">
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" placeholder="Ingrese Nombre" name="nombre" id="nombre">
@@ -212,7 +212,6 @@
 
 <script>
 formAgregar.addEventListener('submit',(target)=>{
-    console.log("Llego");
     target.preventDefault()
     if(!verificarContra()){
         alert("Las contraseñas no coinciden")
@@ -228,16 +227,16 @@ formAgregar.addEventListener('submit',(target)=>{
         correo: correo,
         nombreUsuario: nombreUsuario,
         clave: clave,
-        idRol: idRol
+        idRol: +idRol
     }
+
+    console.log(datos)
     let opciones = {
       method:"POST",
-      headers: {
-      'Content-Type': 'application/json',
-      },
       body: JSON.stringify(datos)
     }
 
+    
     fetch("http://localhost/back-end/api/usuarios/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
@@ -247,7 +246,7 @@ formAgregar.addEventListener('submit',(target)=>{
             alert("Error al agregar usuario")
           }         
     })
-    formAgregar.reset();
+    //formAgregar.reset();
   })
 
   function verificarContra(){
