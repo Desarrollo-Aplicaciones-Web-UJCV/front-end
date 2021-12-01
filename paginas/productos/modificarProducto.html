@@ -1,12 +1,19 @@
+</body>
+</html>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="shortcut icon" href="/img/logo-icono.png">
     <title>Sistema de Ventas</title>
+
     <!-- Custom fonts for this template-->
     <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -15,6 +22,7 @@
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../../css/estilos.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -59,14 +67,14 @@
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Ventas</span>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/usuario (1).png">
-                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-                    <span>Usuarios</span>
-                </a>
             </li> 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="mostrarProducto.html">
+                    <img src="../../img/productos1.png">
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Productos</span>
+                </a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -102,9 +110,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white-600 small">Aaron Jocol</span>
+                                <span class="mr-2 d-none d-lg-inline text-white-600 small">Ammy Izcano</span>
                                 <img class="img-profile rounded-circle"
-                                    src="../../img/undraw_profile.svg">
+                                    src="../../img/undraw_profile_3.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -124,51 +132,41 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Registro de Nuevo Usuario</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Modificar Producto</h1>
                     </div>
                     <!-- Begin Page Content -->
 
-    <!-- Content Row -->
-         <div class="row">
-                <div class="col-lg-6 m-auto">
-                    <form id="formAgregar" autocomplete="off">
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" placeholder="Ingrese Nombre" name="nombre" id="nombre">
-                        </div>
-                        <div class="form-group">
-                            <label for="correo">Correo</label>
-                            <input type="email" class="form-control" placeholder="Ingrese Correo Electrónico" name="correo" id="correo">
-                        </div>
-                        <div class="form-group">
-                            <label for="usuario">Usuario</label>
-                            <input type="text" class="form-control" placeholder="Ingrese Usuario" name="nombreUsuario" id="nombreUsuario">
-                        </div>
-                        <div class="form-group">
-                            <label for="clave">Contraseña</label>
-                            <input type="password" class="form-control" placeholder="Ingrese Contraseña" name="clave" id="clave">
-                        </div>
-                        <div class="form-group">
-                            <label for="claveConfirma">Confirmar contraseña</label>
-                            <input type="password" class="form-control" placeholder="Ingrese Contraseña" name="claveConfirma" id="claveConfirma">
-                        </div>
-                        <div class="form-group">
-                            <label>Rol</label>
-                            <select name="idRol" id="idRol" class="form-control">
-                            </select>
-                        </div>
-                        <input type="submit" value="Guardar Usuario" class="btn btn-primary">
-                        <a href="mostrarUsuarios.html" class="btn btn-danger">Regresar</a>
-                        <br>
-                        <br>
+    <!-- Content Row Modificar -->
+        <div class="content" >
+            <div class="row">
+              <div class="col-lg-6 m-auto">
+                <div class="card">
+                  <div class="card-header">
+                    </div>
+                  <div class="card-body">
+                    <form class="" id="formModificar">
+                      
+                      <div class="form-group">
+                        <label for="">Descripción</label>
+                        <input type="text" placeholder="Ingrese descripción" class="form-control" name="descripcion" id="descripcion" value="">          
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="">Precio</label>
+                        <input type="text" placeholder="Ingrese precio" class="form-control" name="precioVenta" id="precioVenta" value="">          
+                      </div>
+
+                      <button class="btn btn-primary">Editar</button>
+                      <a href="mostrarProducto.html" class="btn btn-danger">Regresar</a>
                     </form>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
-        <!-- End of Content Wrapper -->
-    <!-- End of Page Wrapper -->
+        </div>       
+
+
+    <!-- End of Page Modificar -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -210,64 +208,54 @@
 </body>
 </html>
 
+
 <script>
-formAgregar.addEventListener('submit',(target)=>{
-    target.preventDefault()
-    if(!verificarContra()){
-        alert("Las contraseñas no coinciden")
-        return;
-    }
-    let nombre = document.getElementById('nombre').value
-    let correo = document.getElementById('correo').value
-    let nombreUsuario = document.getElementById('nombreUsuario').value
-    let clave = document.getElementById('clave').value
-    let idRol = document.getElementById('idRol').value
-    let datos = {
-        nombre: nombre,
-        correo: correo,
-        nombreUsuario: nombreUsuario,
-        clave: clave,
-        idRol: +idRol
-    }
 
-    console.log(datos)
-    let opciones = {
-      method:"POST",
-      body: JSON.stringify(datos)
+    var id
+    function obtenerId(){
+        let param = new URLSearchParams(window.location.search)
+        id = param.get("id")
     }
+    obtenerId();
 
-    
-    fetch("http://localhost:8080/back-end/api/usuarios/create.php", opciones)
-    .then(response=>response.json())
-    .then(data=>{ 
-        if (data.code === 0){
-            alert("Usuario agregado")
-          }else{
-            alert("Error al agregar usuario")
-          }         
+    formModificar.addEventListener("submit", (target)=>{
+        target.preventDefault()
+        modificarProducto()
     })
-    //formAgregar.reset();
-  })
 
-  function verificarContra(){
-      var clave = document.getElementById('clave').value
-      var claveConfirma = document.getElementById('claveConfirma').value
-      return(clave == claveConfirma)
-  }
+    function obtenerProducto(){
+        let descripcion = document.getElementById("descripcion");
+        let precioVenta = document.getElementById("precioVenta");
 
-  function obtenerRoles(){
-    fetch("http://localhost:8080/back-end/api/roles/read.php")
-    .then(response=>response.json())
-    .then(data=>{
-        data.data.forEach(element=>{
-            let option = document.createElement("option")
-            option.value = element.idRol
-            option.innerHTML = element.nombre
-            idRol.appendChild(option)
+        fetch(`http://localhost/back-end/api/productos/read_single.php?id=${id}`)
+        .then(response=>response.json())
+        .then(data =>{
+            descripcion.value = data.descripcion 
+            precioVenta.value = data.precioVenta
         })
-    })
-  }
-  obtenerRoles();
+    }
+    obtenerProducto();
+    
+
+    function modificarProducto(){
+        let descripcion = document.getElementById("descripcion")
+        let precioVenta = document.getElementById("precioVenta")
+        
+        var data = {
+            idproducto: id,
+            descripcion: descripcion.value,
+            precioVenta: precioVenta.value
+        }
+        const options = {
+            method: "PUT",
+            body:JSON.stringify(data)
+        }
+        fetch("http://localhost/back-end/api/productos/update.php", options)
+        .then(response=>response.json())
+        .then(data =>{
+            alert("Información de producto actualizada.");
+        })
+    }
+
 
 </script>
-  
