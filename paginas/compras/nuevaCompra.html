@@ -144,7 +144,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>RTN</label>
-                                                    <input type="number" name="RTNProveedor" id="RTNProveedor" class="form-control">
+                                                    <input type="number" name="RTNProveedor" id="RTNProveedor" class="form-control" oninput="encontrarProveedor()">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
@@ -172,15 +172,9 @@
                                         <p style="font-size: 16px; text-transform: uppercase; color: blue;">Usuario Actual</p>
                                     </div>
                                 </div>
-                                <div class="col-lg-6" style="padding-left: 315px;">
-                                    <label>Acciones</label>
-                                    <div id="acciones_venta" class="form-group">
-                                        <a href="#" class="btn btn-primary" id="btnGuardarCompra"><i class="fas fa-save"></i>Guardar Compra</a>
-                                    </div>
-                                </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="tabla">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th width="100px">Código Producto</th>
@@ -195,8 +189,8 @@
                                             <td id="descripcionProd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-</td>
                                             <td><input type="text" style="width: 50px" name="cantidad" id="cantidad" oninput="calcularTotalDetalle()" value="0" min="1" disabled></td>
                                             <td><input type="text" name="precioCompra" id="precioCompra" oninput="calcularTotalDetalle()"value="0.00" min="1" disabled></td>
-                                            <td id="precioTotal" class="txtright">0.00</td>
-                                            <td><button href="#" id="agregarProducto" class="btn btn-primary" onclick="agregarDetalleCompra()">Agregar</button></td>
+                                            <td id="totalDetalle" class="txtright">0.00</td>
+                                            <td><button href="#" id="agregarProducto" class="btn btn-primary" onclick="agregarDetalleCompra()" disabled>Agregar</button></td>
                                         </tr>
                                         <tr>
                                             <th>Código</th>
@@ -217,6 +211,7 @@
                                         <td></td>
                                         <td>Lps.</td>
                                         <td id="totalFinal"></td>
+                                        <td><button class="btn btn-primary" id="btnGuardarCompra" disabled><i class="fas fa-save" style="padding-right: 5px;"></i>Guardar Compra</button></td>
                                         <!-- Contenido ajax -->
                                     </tfoot>
                                 </table>
@@ -271,11 +266,34 @@
 </html>
 <script>
 
+function encontrarProveedor(){
+    var id = document.getElementById("RTNProveedor").value;
+    fetch(`http://localhost:8080/back-end/api/proveedores/read_single.php?id=${id}`)
+    .then(response=>response.json())
+    .then(data =>{
+        console.log(data);
+        document.getElementById('nomProveedor').value = data.nombre;
+        document.getElementById('telProveedor').value = data.telefono;
+    }) 
+}
+
+
  function anadirProducto(){
     var id = document.getElementById("codProducto").value;
+    if(id == ""){
+        document.getElementById('descripcionProd').innerHTML = "      -";
+        disable("agregarProducto");
+        disable("cantidad");
+        disable("precioCompra");
+        return;
+    }
     fetch(`http://localhost:8080/back-end/api/productos/read_single.php?id=${id}`)
     .then(response=>response.json())
     .then(data =>{
+        if(data.descripcion == null){
+            document.getElementById('descripcionProd').innerHTML = "      -";
+            return;
+        }
         document.getElementById('descripcionProd').innerHTML = data.descripcion;
         enable("cantidad");
         enable("precioCompra");
@@ -283,13 +301,22 @@
  }
 
  function calcularTotal(){
-
     var total = 0;
+    var table = document.getElementById("tabla");
+    var tbodyRowCount = table.tBodies[0].rows.length;
+    if(tbodyRowCount > 0){
+        enable("btnGuardarCompra");
+    }else{
+        document.getElementById("totalFinal").innerText = "";
+        disable("btnGuardarCompra");
+    }
+
     for(var i = rowCount; i > 0; i--){
         var totalDetalle = parseFloat(document.getElementById("t"+i+"").innerText);
         total = totalDetalle + total;
     }
     document.getElementById("totalFinal").innerText = total;
+    
 
  }
 
@@ -298,7 +325,12 @@
     var precioCompra = document.getElementById("precioCompra").value;
     var total = cantidad * precioCompra;
 
-    document.getElementById("precioTotal").innerHTML = total;
+    document.getElementById("totalDetalle").innerHTML = total;
+    if(total > 0.00){
+        enable("agregarProducto");
+    }else{
+        disable("agregarProducto");
+    }
  }
 
  var rowCount = 1;
@@ -307,7 +339,7 @@
         var descripcion = document.getElementById("descripcionProd").innerText;
         var cantidad = document.getElementById("cantidad").value;
         var precio = document.getElementById("precioCompra").value;
-        var total = document.getElementById("precioTotal").innerText;
+        var total = document.getElementById("totalDetalle").innerText;
 
         html = document.getElementById("detalleCompra").innerHTML;
 
@@ -325,22 +357,16 @@
 
  function quitarDetalle(rowId){
     document.getElementById(rowId).remove();
- }
- function validarDetalleCompra(){
-    var codigoProd = document.getElementById("codProducto").value;
-    var descripcion = document.getElementById("descripcionProd").innerText;
-    var cantidad = document.getElementById("cantidad").value;
-    var precio = document.getElementById("precioCompra").value;
-    var total = document.getElementById("precioTotal").innerText;
-
+    calcularTotal();
  }
 
  function reiniciarCamposCompra(){
+    disable("agregarProducto");
     disable("cantidad");
     disable("precioCompra");
     document.getElementById('cantidad').value = "0";
     document.getElementById('precioCompra').value = "0.00";
-    document.getElementById('precioTotal').value = "0.00";
+    document.getElementById('totalDetalle').value = "0.00";
     document.getElementById('codProducto').value = "";
  }
 
