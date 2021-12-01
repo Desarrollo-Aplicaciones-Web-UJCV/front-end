@@ -215,10 +215,8 @@
     function obtenerId(){
         let param = new URLSearchParams(window.location.search)
         id = param.get("id")
-        console.log(id)        
     }
     obtenerId();
-    console.log(id)
 
     formModificar.addEventListener("submit", (target)=>{
         target.preventDefault()
@@ -240,16 +238,13 @@
     
 
     function modificarProducto(){
-        console.log("hola")
         let descripcion = document.getElementById("descripcion")
         let precioVenta = document.getElementById("precioVenta")
         
         var data = {
-            idProducto: id,
-           
+            idproducto: id,
             descripcion: descripcion.value,
-            precioVenta: precioVenta.value,
-            
+            precioVenta: precioVenta.value
         }
         const options = {
             method: "PUT",
@@ -258,11 +253,9 @@
         fetch("http://localhost/back-end/api/productos/update.php", options)
         .then(response=>response.json())
         .then(data =>{
-            console.log(data)
-           
+            alert("Información de producto actualizada.");
         })
     }
 
-   
 
 </script>
