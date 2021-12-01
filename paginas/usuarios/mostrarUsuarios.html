@@ -210,7 +210,7 @@
 
 
     function getData(){
-        fetch("http://localhost:8080/back-end/api/usuarios/read.php")
+        fetch("http://localhost/back-end/api/usuarios/read.php")
         .then(res=>res.json())
         .then(data=>{
             data.data.forEach(element => {
@@ -232,7 +232,7 @@
     getData()
 
     function eliminarUsuario(event,id){
-        fetch(`http://localhost:8080/back-end/api/usuarios/delete.php?id=${id}`).then(response => response.json()).then((data) => {
+        fetch(`http://localhost/back-end/api/usuarios/delete.php?id=${id}`).then(response => response.json()).then((data) => {
             event.target.parentElement.remove()
             alert(data.message)
         })
