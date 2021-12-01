@@ -39,7 +39,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../indexAdministrador.html">
+                <a class="nav-link" href="../../index.html">
                     <i class="fas fa-fw fa-cogs"></i>
                     <span>Panel de Administración</span></a>
             </li>
@@ -47,52 +47,27 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-       <!-- Heading -->
-       <div class="sidebar-heading">Módulos</div>
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Módulos
+            </div>
 
-       <!-- Nav Item - Pages Collapse Menu -->
-       <li class="nav-item">
-         <a class="nav-link collapsed" href="../../indexVentas.html">
-           <img src="../../img/ventas1.png" />
-           <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-           <span>Ventas</span>
-         </a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link collapsed" href="#">
-             <img src="../../img/productos1.png" />
-             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-             <span>Productos</span>
-           </a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link collapsed" href="">
-             <img src="../../img/clientes1.png" />
-             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-             <span>Clientes</span>
-           </a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link collapsed" href="#">
-             <img src="../../img/inventario1.png" />
-             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-             <span>Proveedores</span>
-           </a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link collapsed" href="#">
-             <img src="../../img/carrito-de-compras.png" />
-             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-             <span>Compras</span>
-           </a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link collapsed" href="mostrarUsuarios.html">
-             <img src="../../img/usuario (1).png" />
-             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-             <span>Usuarios</span>
-           </a>
-       </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                    <img src="../../img/ventas1.png">
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Ventas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                    <img src="../../img/usuario (1).png">
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Usuarios</span>
+                </a>
+            </li> 
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -149,7 +124,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Registro de Nuevo Usuario</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Nueva Contrasena</h1>
                     </div>
                     <!-- Begin Page Content -->
 
@@ -158,29 +133,12 @@
                 <div class="col-lg-6 m-auto">
                     <form id="formAgregar" autocomplete="off">
                         <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" placeholder="Ingrese Nombre" name="nombre" id="nombre">
-                        </div>
-                        <div class="form-group">
-                            <label for="correo">Correo</label>
-                            <input type="email" class="form-control" placeholder="Ingrese Correo Electrónico" name="correo" id="correo">
-                        </div>
-                        <div class="form-group">
-                            <label for="usuario">Usuario</label>
-                            <input type="text" class="form-control" placeholder="Ingrese Usuario" name="nombreUsuario" id="nombreUsuario">
-                        </div>
-                        <div class="form-group">
-                            <label for="clave">Contraseña</label>
+                            <label for="clave">Nueva Contraseña</label>
                             <input type="password" class="form-control" placeholder="Ingrese Contraseña" name="clave" id="clave">
                         </div>
                         <div class="form-group">
                             <label for="claveConfirma">Confirmar contraseña</label>
                             <input type="password" class="form-control" placeholder="Ingrese Contraseña" name="claveConfirma" id="claveConfirma">
-                        </div>
-                        <div class="form-group">
-                            <label>Rol</label>
-                            <select name="idRol" id="idRol" class="form-control">
-                            </select>
                         </div>
                         <input type="submit" value="Guardar Usuario" class="btn btn-primary">
                         <a href="mostrarUsuarios.html" class="btn btn-danger">Regresar</a>
@@ -261,28 +219,27 @@ formAgregar.addEventListener('submit',(target)=>{
       body: JSON.stringify(datos)
     }
 
-    function verificarContra(){
-      var clave = document.getElementById('clave').value
-      var claveConfirma = document.getElementById('claveConfirma').value
-      return(clave == claveConfirma)
-    }
-
+    
     fetch("http://localhost/back-end/api/usuarios/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
         if (data.code === 0){
             alert("Usuario agregado")
-            window.location.replace("mostrarUsuarios.html")
           }else{
             alert("Error al agregar usuario")
           }         
     })
-    formAgregar.reset();
+    //formAgregar.reset();
   })
 
+  function verificarContra(){
+      var clave = document.getElementById('clave').value
+      var claveConfirma = document.getElementById('claveConfirma').value
+      return(clave == claveConfirma)
+  }
 
   function obtenerRoles(){
-    fetch("http://localhost:8080/back-end/api/roles/read.php")
+    fetch("http://localhost/back-end/api/roles/read.php")
     .then(response=>response.json())
     .then(data=>{
         data.data.forEach(element=>{
@@ -296,4 +253,3 @@ formAgregar.addEventListener('submit',(target)=>{
   obtenerRoles();
 
 </script>
-  

@@ -67,7 +67,6 @@
         fetch("http://localhost/back-end/api/usuarios/login.php", opciones)
         .then(response=>response.json())
         .then(data=>{
-          console.log(data)
           if (data.code === 0){
             if (data.idRol == 1) {
               window.location.replace("./paginas/indexAdministrador.html")
