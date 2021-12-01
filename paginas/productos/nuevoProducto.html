@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="mostrarProducto.html">
                     <img src="../../img/productos1.png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Productos</span>
@@ -133,22 +133,18 @@
          <div class="row">
                 <div class="col-lg-6 m-auto">
                     <form id="formAgregar" autocomplete="off">
-                        <div class="form-group">
-                            <label for="proveedor">Proveedor</label>
-                            <input type="text" class="form-control" placeholder="Ingrese proveedor" name="proveedor" id="proveedor">
-                        </div>
+                    
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
                             <input type="text" class="form-control" placeholder="Ingrese descripción" name="descripcion" id="descripcion">
                         </div>
+
                         <div class="form-group">
-                            <label for="precio">Precio</label>
-                            <input type="text" class="form-control" placeholder="Ingrese precio" name="precio" id="precio">
+                            <label for="precioVenta">Precio Venta</label>
+                            <input type="text" class="form-control" placeholder="Ingrese precio" name="precioVenta" id="precioVenta">
                         </div>
-                        <div class="form-group">
-                            <label for="cantidad">Cantidad</label>
-                            <input type="text" class="form-control" placeholder="Ingrese cantidad" name="cantidad" id="cantidad">
-                        </div>
+                        
+                       
                         
                     
                         <input type="submit" value="Guardar Producto" class="btn btn-primary">
@@ -208,16 +204,17 @@
 formAgregar.addEventListener('submit',(target)=>{
     target.preventDefault()
     
-    let proveedor = document.getElementById('proveedor').value
+    
     let descripcion = document.getElementById('descripcion').value
-    let precio = document.getElementById('precio').value
-    let cantidad = document.getElementById('cantidad').value
+    let precioVenta = document.getElementById('precioVenta').value
+    
     
     let datos = {
-        proveedor: proveedor,
+        
         descripcion: descripcion,
-        precio: precio,
-        cantidad: cantidad
+        precioVenta: precioVenta
+
+        
         
     }
 
