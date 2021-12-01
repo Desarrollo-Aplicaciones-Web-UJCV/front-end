@@ -261,6 +261,7 @@ formAgregar.addEventListener('submit',(target)=>{
       body: JSON.stringify(datos)
     }
 
+
     function verificarContra(){
       var clave = document.getElementById('clave').value
       var claveConfirma = document.getElementById('claveConfirma').value
@@ -282,7 +283,7 @@ formAgregar.addEventListener('submit',(target)=>{
 
 
   function obtenerRoles(){
-    fetch("http://localhost:8080/back-end/api/roles/read.php")
+    fetch("http://localhost/back-end/api/roles/read.php")
     .then(response=>response.json())
     .then(data=>{
         data.data.forEach(element=>{
