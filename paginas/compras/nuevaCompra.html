@@ -193,8 +193,8 @@
                                         <tr>
                                             <td><input type="number" name="codProducto" id="codProducto" oninput="anadirProducto()"></td>
                                             <td id="descripcionProd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-</td>
-                                            <td><input type="text" style="width: 50px" name="cantidad" id="cantidad" oninput="calcularTotal()" value="0" min="1" disabled></td>
-                                            <td><input type="text" name="precioCompra" id="precioCompra" oninput="calcularTotal()"value="0.00" min="1" disabled></td>
+                                            <td><input type="text" style="width: 50px" name="cantidad" id="cantidad" oninput="calcularTotalDetalle()" value="0" min="1" disabled></td>
+                                            <td><input type="text" name="precioCompra" id="precioCompra" oninput="calcularTotalDetalle()"value="0.00" min="1" disabled></td>
                                             <td id="precioTotal" class="txtright">0.00</td>
                                             <td><button href="#" id="agregarProducto" class="btn btn-primary" onclick="agregarDetalleCompra()">Agregar</button></td>
                                         </tr>
@@ -212,6 +212,11 @@
                                     </tbody>
 
                                     <tfoot id="detalle_totales">
+                                        <th>Total</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Lps.</td>
+                                        <td id="totalFinal"></td>
                                         <!-- Contenido ajax -->
                                     </tfoot>
                                 </table>
@@ -278,6 +283,17 @@
  }
 
  function calcularTotal(){
+
+    var total = 0;
+    for(var i = rowCount; i > 0; i--){
+        var totalDetalle = parseFloat(document.getElementById("t"+i+"").innerText);
+        total = totalDetalle + total;
+    }
+    document.getElementById("totalFinal").innerText = total;
+
+ }
+
+ function calcularTotalDetalle(){
     var cantidad = document.getElementById("cantidad").value;
     var precioCompra = document.getElementById("precioCompra").value;
     var total = cantidad * precioCompra;
@@ -299,15 +315,24 @@
 		html += "<td>"+descripcion+"</td>";
 		html += "<td>"+cantidad+"</td>";
 		html += "<td>"+precio+"</td>";
-		html += "<td>"+total+"</td> ";
+		html += "<td id=t"+rowCount+">"+total+"</td> ";
 		html += `<td><button class="btn btn-danger" onclick="quitarDetalle(`+rowCount+`)">-</button></td></tr>`;
 		document.getElementById('detalleCompra').innerHTML = html;
         reiniciarCamposCompra();
+        calcularTotal();
         rowCount++;
  }
 
  function quitarDetalle(rowId){
     document.getElementById(rowId).remove();
+ }
+ function validarDetalleCompra(){
+    var codigoProd = document.getElementById("codProducto").value;
+    var descripcion = document.getElementById("descripcionProd").innerText;
+    var cantidad = document.getElementById("cantidad").value;
+    var precio = document.getElementById("precioCompra").value;
+    var total = document.getElementById("precioTotal").innerText;
+
  }
 
  function reiniciarCamposCompra(){
