@@ -237,7 +237,7 @@ formAgregar.addEventListener('submit',(target)=>{
     }
 
     
-    fetch("http://localhost:8080/back-end/api/usuarios/create.php", opciones)
+    fetch("http://localhost/back-end/api/usuarios/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
         if (data.code === 0){
@@ -256,7 +256,7 @@ formAgregar.addEventListener('submit',(target)=>{
   }
 
   function obtenerRoles(){
-    fetch("http://localhost:8080/back-end/api/roles/read.php")
+    fetch("http://localhost/back-end/api/roles/read.php")
     .then(response=>response.json())
     .then(data=>{
         data.data.forEach(element=>{

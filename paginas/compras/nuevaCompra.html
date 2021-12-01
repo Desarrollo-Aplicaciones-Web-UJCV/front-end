@@ -292,7 +292,7 @@ function encontrarProveedor(){
         disable("precioCompra");
         return;
     }
-    fetch(`http://localhost:8080/back-end/api/productos/read_single.php?id=${id}`)
+    fetch(`http://localhost/back-end/api/productos/read_single.php?id=${id}`)
     .then(response=>response.json())
     .then(data =>{
         if(data.descripcion == null){
@@ -397,7 +397,7 @@ function encontrarProveedor(){
       body: JSON.stringify(datos)
     }
     console.log(opciones);
-    fetch("http://localhost:8080/back-end/api/compras/create.php", opciones)
+    fetch("http://localhost/back-end/api/compras/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
         if (data.code === 0){
