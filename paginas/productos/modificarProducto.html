@@ -69,7 +69,7 @@
                 </a>
             </li> 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="mostrarProducto.html">
                     <img src="../../img/productos1.png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Productos</span>
@@ -145,25 +145,19 @@
                     </div>
                   <div class="card-body">
                     <form class="" id="formModificar">
-                      <div class="form-group">
-                        <label for="">Proveedor</label>
-                        <input type="text" placeholder="Ingrese proveedor" class="form-control" name="proveedor" id="proveedor" value="">
-                      </div>
+                      
                       <div class="form-group">
                         <label for="">Descripción</label>
                         <input type="text" placeholder="Ingrese descripción" class="form-control" name="descripcion" id="descripcion" value="">          
                       </div>
+                      
                       <div class="form-group">
                         <label for="">Precio</label>
-                        <input type="text" placeholder="Ingrese precio" class="form-control" name="precio" id="precio" value="">
+                        <input type="text" placeholder="Ingrese precio" class="form-control" name="precioVenta" id="precioVenta" value="">          
                       </div>
-                      <div class="form-group">
-                        <label>Cantidad</label>
-                        <input type="text" placeholder="Ingrese cantidad" class="form-control" name="cantidad" id="cantidad" value="">
-                        
-                      </div>
+
                       <button class="btn btn-primary">Editar</button>
-                      <a href="mostrarProductos.html" class="btn btn-danger">Regresar</a>
+                      <a href="mostrarProducto.html" class="btn btn-danger">Regresar</a>
                     </form>
                   </div>
                 </div>
@@ -220,45 +214,42 @@
     var id
     function obtenerId(){
         let param = new URLSearchParams(window.location.search)
-        id = param.get("id")        
+        id = param.get("id")
+        console.log(id)        
     }
     obtenerId();
+    console.log(id)
 
-    
     formModificar.addEventListener("submit", (target)=>{
         target.preventDefault()
         modificarProducto()
     })
 
     function obtenerProducto(){
-        let proveedor = document.getElementById("proveedor")
-        let descripcion = document.getElementById("descripcion")
-        let precio = document.getElementById("precio")
-        let cantidad = document.getElementById("cantidad")
+        let descripcion = document.getElementById("descripcion");
+        let precioVenta = document.getElementById("precioVenta");
+
         fetch(`http://localhost/back-end/api/productos/read_single.php?id=${id}`)
         .then(response=>response.json())
         .then(data =>{
-            proveedor.value = data.proveedor 
             descripcion.value = data.descripcion 
-            precio.value = data.precio 
-            cantidad.value = data.cantidad
+            precioVenta.value = data.precioVenta
         })
     }
+    obtenerProducto();
     
 
     function modificarProducto(){
         console.log("hola")
-        let proveedor = document.getElementById("proveedor")
         let descripcion = document.getElementById("descripcion")
-        let precio = document.getElementById("precio")
-        let cantidad = document.getElementById("cantidad")
+        let precioVenta = document.getElementById("precioVenta")
         
         var data = {
             idProducto: id,
-            proveedor: proveedor.value,
+           
             descripcion: descripcion.value,
-            precio: precio.value,
-            cantidad: cantidad.value
+            precioVenta: precioVenta.value,
+            
         }
         const options = {
             method: "PUT",

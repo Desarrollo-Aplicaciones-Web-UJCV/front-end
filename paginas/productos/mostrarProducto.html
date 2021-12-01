@@ -144,9 +144,8 @@
 					        <thead class="thead-dark">
 						        <tr>
 							        <th>Id</th>
-							        <th>Producto</th>
-							        <th>Precio</th>
-							        <th>Stock</th>
+							        <th>Descripción</th>
+                                    <th>Precio Venta</th>
 							        <th>Acciones</th>
 						        </tr>
 					        </thead>
@@ -214,16 +213,16 @@
         .then(res=>res.json())
         .then(data=>{
             data.data.forEach(element => {
+                console.log(data);
                 let tableRow = document.createElement('tr')
                 tableRow.innerHTML =  ` 
-                                        <td>${element.proveedor}</td>
+                                        <td>${element.idproducto}</td> 
                                         <td>${element.descripcion}</td> 
-                                        <td>${element.precio}</td>
-                                        <td>${element.stock}</td>
-                                        
+                                        <td>${element.precioVenta}</td>
+                                       
                                     
-                                        <a href="modificarProducto.html?id=${element.id}" class="btn btn-primary">Modificar</a>
-                                        <a onclick="eliminarProducto(event, ${element.id})" class="btn btn-danger">Eliminar</a>
+                                        <a href="modificarProducto.html?id=${element.idproducto}" class="btn btn-primary">Modificar</a>
+                                        <a onclick="eliminarProducto(event, ${element.idproducto})" class="btn btn-danger">Eliminar</a>
                                         `
                 listaProductos.appendChild(tableRow)
             });
@@ -241,8 +240,4 @@
         })
     }
 
-    
-
-
-    
 </script>
