@@ -39,7 +39,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../../index.html">
+                <a class="nav-link" href="../indexAdministrador.html">
                     <i class="fas fa-fw fa-cogs"></i>
                     <span>Panel de Administración</span></a>
             </li>
@@ -47,27 +47,52 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Módulos
-            </div>
+       <!-- Heading -->
+       <div class="sidebar-heading">Módulos</div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/ventas1.png">
-                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-                    <span>Ventas</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/usuario (1).png">
-                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-                    <span>Usuarios</span>
-                </a>
-            </li> 
-
+       <!-- Nav Item - Pages Collapse Menu -->
+       <li class="nav-item">
+         <a class="nav-link collapsed" href="../../indexVentas.html">
+           <img src="../../img/ventas1.png" />
+           <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+           <span>Ventas</span>
+         </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="#">
+             <img src="../../img/productos1.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Productos</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="">
+             <img src="../../img/clientes1.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Clientes</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="#">
+             <img src="../../img/inventario1.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Proveedores</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="#">
+             <img src="../../img/carrito-de-compras.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Compras</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="mostrarUsuarios.html">
+             <img src="../../img/usuario (1).png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Usuarios</span>
+           </a>
+       </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -236,27 +261,29 @@ formAgregar.addEventListener('submit',(target)=>{
       body: JSON.stringify(datos)
     }
 
-    
-    fetch("http://localhost:8080/back-end/api/usuarios/create.php", opciones)
+
+    function verificarContra(){
+      var clave = document.getElementById('clave').value
+      var claveConfirma = document.getElementById('claveConfirma').value
+      return(clave == claveConfirma)
+    }
+
+    fetch("http://localhost/back-end/api/usuarios/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
         if (data.code === 0){
             alert("Usuario agregado")
+            window.location.replace("mostrarUsuarios.html")
           }else{
             alert("Error al agregar usuario")
           }         
     })
-    //formAgregar.reset();
+    formAgregar.reset();
   })
 
-  function verificarContra(){
-      var clave = document.getElementById('clave').value
-      var claveConfirma = document.getElementById('claveConfirma').value
-      return(clave == claveConfirma)
-  }
 
   function obtenerRoles(){
-    fetch("http://localhost:8080/back-end/api/roles/read.php")
+    fetch("http://localhost/back-end/api/roles/read.php")
     .then(response=>response.json())
     .then(data=>{
         data.data.forEach(element=>{

@@ -47,7 +47,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../../index.html">
+                <a class="nav-link" href="../indexAdministrador.html">
                     <i class="fas fa-fw fa-cogs"></i>
                     <span>Panel de Administración</span></a>
             </li>
@@ -55,27 +55,52 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Módulos
-            </div>
+       <!-- Heading -->
+       <div class="sidebar-heading">Módulos</div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/ventas1.png">
-                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-                    <span>Ventas</span>
-                </a>
-            </li> 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/usuario (1).png">
-                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-                    <span>Usuarios</span>
-                </a>
-            </li>
-
+       <!-- Nav Item - Pages Collapse Menu -->
+       <li class="nav-item">
+         <a class="nav-link collapsed" href="../../indexVentas.html">
+           <img src="../../img/ventas1.png" />
+           <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+           <span>Ventas</span>
+         </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="#">
+             <img src="../../img/productos1.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Productos</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="">
+             <img src="../../img/clientes1.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Clientes</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="#">
+             <img src="../../img/inventario1.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Proveedores</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="#">
+             <img src="../../img/carrito-de-compras.png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Compras</span>
+           </a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link collapsed" href="mostrarUsuarios.html">
+             <img src="../../img/usuario (1).png" />
+             <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+             <span>Usuarios</span>
+           </a>
+       </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -279,10 +304,14 @@
         }
         fetch("http://localhost/back-end/api/usuarios/update.php", options)
         .then(response=>response.json())
-        .then(data =>{
-            console.log(data)
-           
-        })
+        .then(data=>{ 
+        if (data.code === 0){
+            alert("Usuario modificado")
+            window.location.replace("mostrarUsuarios.html")
+          }else{
+            alert("Error al modificar usuario")
+          }         
+    })
     }
 
    
