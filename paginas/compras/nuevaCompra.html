@@ -31,7 +31,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../../index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../indexAdministrador.html">
                 <div class="sidebar-brand-icon">
                     <img src="../../img/logo-icono.png" >
                     <!-- <i class="fas fa-user"></i> -->
@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="../../index.html">
+                <a class="nav-link" href="../indexAdministrador.html">
                     <i class="fas fa-fw fa-cogs"></i>
                     <span>Panel de Administración</span></a>
             </li>
@@ -59,14 +59,14 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="../ventas/mostrarVentas.html">
                     <img src="../../img/ventas1.png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Ventas</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="compras.html">
+                <a class="nav-link collapsed" href="./mostrarCompras.html">
                     <img src="../../img/carrito-de-compras.png">
                     <span>Compras</span>
                 </a>
@@ -143,7 +143,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>RTN</label>
-                                                    <input type="number" name="RTNProveedor" id="RTNProveedor" class="form-control" oninput="encontrarProveedor()">
+                                                    <input type="text" autofocus name="RTNProveedor" id="RTNProveedor" class="form-control" onblur="encontrarProveedor()" maxlength="14">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
@@ -269,18 +269,27 @@
 
 </html>
 <script>
+    var detalles=[];
     var fecha = new Date();
     document.getElementById("fecha").innerHTML = fecha.toLocaleString();
 
 function encontrarProveedor(){
     var id = document.getElementById("RTNProveedor").value;
-    fetch(`http://localhost/back-end/api/proveedores/read_single.php?id=${id}`)
-    .then(response=>response.json())
-    .then(data =>{
-        document.getElementById('nomProveedor').value = data.nombre;
-        document.getElementById('telProveedor').value = data.telefono;
-    }) 
-}
+    
+        fetch(`http://localhost/back-end/api/proveedores/read_single.php?id=${id}`)
+        .then(response=>response.json())
+        .then(data =>{
+            document.getElementById('nomProveedor').value = data.nombre;
+            document.getElementById('telProveedor').value = data.telefono;
+        })
+        .catch(err =>{
+            alert('No se encontró ningun proveedor con el RTN especificado.')
+            document.getElementById('RTNProveedor').value = ""
+            document.getElementById('nomProveedor').value = "";
+            document.getElementById('telProveedor').value = "";
+            document.getElementById('RTNProveedor').focus()
+        })
+    }
 
 
  function anadirProducto(){
@@ -347,6 +356,12 @@ function encontrarProveedor(){
         var total = document.getElementById("totalDetalle").innerText;
 
         html = document.getElementById("detalleCompra").innerHTML;
+     let elemento = {
+         idProducto: +codigoProd,
+         cantidad: +cantidad,
+         precioCompra: +precio
+     }
+     detalles.push(elemento)
 
 		html += "<tr id="+rowCount+"><td>"+codigoProd+"</td>";
 		html += "<td>"+descripcion+"</td>";
@@ -378,25 +393,18 @@ function encontrarProveedor(){
  function guardarCompra(){
 
     var idProv = document.getElementById("RTNProveedor").value;
-    var str = '{"idProducto": 4, "cantidad": 10, "precioCompra": 30.00}\n'+
-              '{"idProducto": 5, "cantidad": 5, "precioCompra": 60.00}';
-    var strLines = str.split("\n");
-    var arrayDetalles = new Array();
-    for(var i = 0; i < strLines.length ; i++){
-        var json = strLines[i];
-        let nuevoJson = arrayDetalles.push(json);
-    }
-    let datos = {
+     console.log(detalles)
+     let datos = {
         idProveedor: idProv,
-        detalleCompra:arrayDetalles
+        detalleCompra:detalles
     }
-    console.log(datos);
+    console.log(localStorage.getItem('token'))
     let opciones = {
       method:"POST",
-      header:{"Authorization":""},
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
       body: JSON.stringify(datos)
     }
-    console.log(opciones);
+    
     fetch("http://localhost/back-end/api/compras/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
