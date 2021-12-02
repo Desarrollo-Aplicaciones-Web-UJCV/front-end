@@ -132,7 +132,7 @@
                             <div class="form-group">
                                 <h4 class="text-center">Datos del Proveedor</h4>
                                 <a href="../proveedor/nuevoProveedor/html" class="btn btn-primary btn_new_cliente"><i class="fas fa-user-plus"></i> Nuevo Proveedor</a>
-                                <a href="compras.html" class="btn btn-danger">Compras</a>
+                                <a href="mostrarCompras.html" class="btn btn-danger">Compras</a>
                             </div>
                             <div class="card">
                                 <div class="card-body">
@@ -274,7 +274,7 @@
 
 function encontrarProveedor(){
     var id = document.getElementById("RTNProveedor").value;
-    fetch(`http://localhost:8080/back-end/api/proveedores/read_single.php?id=${id}`)
+    fetch(`http://localhost/back-end/api/proveedores/read_single.php?id=${id}`)
     .then(response=>response.json())
     .then(data =>{
         document.getElementById('nomProveedor').value = data.nombre;
