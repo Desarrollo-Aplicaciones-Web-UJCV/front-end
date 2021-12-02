@@ -68,6 +68,7 @@
         .then(response=>response.json())
         .then(data=>{
           if (data.code === 0){
+            localStorage.setItem('token',data.auth)
             if (data.idRol == 1) {
               window.location.replace("./paginas/indexAdministrador.html")
             } else if(data.idRol == 2){
