@@ -195,6 +195,7 @@
 					</thead>
 
 					<tbody id=listaProveedores>
+		
 					<td></td>
 					<td></td>
 					<td></td>
@@ -202,13 +203,12 @@
 					<td></td>
 					
 					<td>
-					<a href="" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
+					<a href="modificarProveedor.html" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
 					<form action="" method="post" class="confirmar d-inline">
 					<button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
 					</form>
 					</td>
-					</tr>
-						
+					</tr>						
 					</tbody>
 
 				</table>
@@ -278,3 +278,43 @@
     <script src="../../vendor/chart.js/Chart.min.js"></script>
   </body>
 </html>
+
+
+<script>
+    
+
+    function getData(){
+        fetch("http://localhost/back-end/api/proveedores/read.php")
+        .then(res=>res.json())
+        .then(data=>{
+            data.data.forEach(element => {
+                let tableRow = document.createElement('tr')
+                tableRow.innerHTML =  ` <td>${element.nombre}</td> 
+                                        <td>${element.correo}</td>
+                                        <td>${element.telefono}</td>
+                                        <td>${element.direccion}</td>
+
+                                        <a href="modificarProveedor.html?id=${element.id}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
+                                        <a onclick="eliminarProveedor(event, ${element.id})" class="btn btn-danger">Eliminar</a>
+                                        `
+                listaProveedores.appendChild(tableRow)
+            });
+
+        })
+        .catch(error=>console.log(error))      
+        
+    }
+    getData()
+
+    function eliminarProveedor(event,id){
+        fetch(`http://localhost/back-end/api/proveedores/delete.php?id=${id}`).then(response => response.json()).then((data) => {
+            event.target.parentElement.remove()
+            alert(data.message)
+        })
+    }
+
+    
+
+
+    
+</script>

@@ -177,8 +177,8 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    	<h1 class="h3 mb-0 text-gray-800">Ingrese el Nuevo Proveedor</h1>
-			<a href="mostrarProducto.html" class="btn btn-danger">Regresar</a>
+                    	<h1 class="h3 mb-0 text-gray-800">Modificar Proveedor</h1>
+			<a href="mostrarProveedor.html" class="btn btn-danger">Regresar</a>
 
                     </div>
                     <!-- Begin Page Content -->
@@ -214,7 +214,7 @@
                         </div>
                         <br>
                     
-                        <center><input type="submit" value="Guardar Producto" class="btn btn-primary"></center>
+                        <center><input type="submit" value="Modificar Producto" class="btn btn-primary"></center>
                         
                         <br>
                         <br>
@@ -340,7 +340,12 @@
         fetch("http://localhost/back-end/api/proveedores/update.php", options)
         .then(response=>response.json())
         .then(data =>{
-            alert("Información del proveedor actualizada.");
+	if (data.code === 0){
+            alert("Información del proveedor actualizada.")
+	    window.location.replace("mostrarProveedor.html")
+          }else{
+            alert("Error al modificar Proveedor")
+          }     
         })
     }
 

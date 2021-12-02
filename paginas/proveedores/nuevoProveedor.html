@@ -178,7 +178,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     	<h1 class="h3 mb-0 text-gray-800">Ingrese el Nuevo Proveedor</h1>
-			<a href="mostrarProducto.html" class="btn btn-danger">Regresar</a>
+			<a href="mostrarProveedor.html" class="btn btn-danger">Regresar</a>
 
                     </div>
                     <!-- Begin Page Content -->
@@ -293,7 +293,6 @@ formAgregar.addEventListener('submit',(target)=>{
     target.preventDefault()
     
     
-    let idproveedor = document.getElementById('idproveedor').value
     let nombre = document.getElementById('nombre').value
     let email = document.getElementById('email').value
     let telefono = document.getElementById('telefono').value
@@ -302,7 +301,6 @@ formAgregar.addEventListener('submit',(target)=>{
     
     let datos = {
         
-        idproveedor: ipproveedor,
 	nombre: nombre,
 	email: email,
 	telefono: telefono,
@@ -322,11 +320,12 @@ formAgregar.addEventListener('submit',(target)=>{
     .then(data=>{ 
         if (data.code === 0){
             alert("Proveedor agregado")
+	    window.location.replace("mostrarProveedor.html")
           }else{
             alert("Error al agregar el proveedor")
           }         
     })
-    //formAgregar.reset();
+    formAgregar.reset();
   })
 
 
