@@ -139,7 +139,7 @@
                   aria-expanded="false"
                 >
                   <span class="mr-2 d-none d-lg-inline text-white-600 small"
-                    >Eduin Flores</span
+                    >Admin</span
                   >
                   <img
                     class="img-profile rounded-circle"
@@ -177,16 +177,14 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    	<h1 class="h3 mb-0 text-gray-800">Modificar Proveedor</h1>
-			<a href="mostrarProveedor.html" class="btn btn-danger">Regresar</a>
-
+                    	<h1 class="h3 mb-0 text-gray-800" style="text-align : center">Modificar Proveedor</h1>
                     </div>
                     <!-- Begin Page Content -->
 
     		<!-- Content Row -->
          	<div class="row">
                 <div class="col-lg-6 m-auto">
-                    <form id="formAgregar" autocomplete="off">
+                    <form id="formModificar" autocomplete="off">
                     
                         <div class="form-group">
                             <label for="idproveedor">Rtn</label>
@@ -213,10 +211,8 @@
                             <input type="text" class="form-control" placeholder="Ingrese la Direccion" name="direccion" id="direccion">
                         </div>
                         <br>
-                    
-                        <center><input type="submit" value="Modificar Producto" class="btn btn-primary"></center>
-                        
-                        <br>
+                        <button class="btn btn-primary">Editar</button>
+                        <a href="mostrarProveedor.html" class="btn btn-danger">Regresar</a>                        
                         <br>
                     </form>
                 </div>
@@ -303,17 +299,19 @@
     })
 
     function obtenerProveedor(){
-	let nombre = document.getElementById("nombre");
-	let email = document.getElementById("email");
+        let rtn = document.getElementById("idproveedor");
+	      let nombre = document.getElementById("nombre");
+	      let email = document.getElementById("email");
         let telefono = document.getElementById("telefono");
         let direccion = document.getElementById("direccion");
 
-        fetch(`http://localhost/back-end/api/proveedor/read_single.php?id=${id}`)
+        fetch(`http://localhost/back-end/api/proveedores/read_single.php?id=${id}`)
         .then(response=>response.json())
         .then(data =>{
+          rtn.value = data.id
             nombre.value = data.nombre
- 	    email.value = data.email
-	    telefono.value = data.telefono
+ 	          email.value = data.email
+	          telefono.value = data.telefono
             direccion.value = data.direccion
         })
     }
@@ -322,15 +320,15 @@
 
     function modificarProveedor(){
         let nombre = document.getElementById("nombre")
-	let email = document.getElementById("email")
-	let telefono = document.getElementById("telefono")
+	      let email = document.getElementById("email")
+	      let telefono = document.getElementById("telefono")
         let direccion = document.getElementById("direccion")
         
         var data = {
             idproveedor: id,
             nombre: nombre.value,
-	    email: email.value,
-	    telefono: telefono.value,
+	          email: email.value,
+	          telefono: telefono.value,
             direccion: direccion.value
         }
         const options = {

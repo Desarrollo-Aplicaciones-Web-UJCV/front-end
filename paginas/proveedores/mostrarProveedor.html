@@ -185,34 +185,18 @@
 				<table class="table table-striped table-bordered" id="table">
 					<thead class="thead-dark">
 						<tr>
-							<th>Id</th>
 							<th>Rtn</th>
-							<th>Proveedor</th>
-							<th>Telefono</th>
-							<th>Direccion</th>
+							<th>Nombre</th>
+              <th>Correo</th>
+							<th>Teléfono</th>
+							<th>Dirección</th>
 							<th>Acciones</th>
 						</tr>
 					</thead>
-
 					<tbody id=listaProveedores>
-		
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					
-					<td>
-					<a href="modificarProveedor.html" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
-					<form action="" method="post" class="confirmar d-inline">
-					<button class="btn btn-danger" type="submit"><i class='fas fa-trash-alt'></i> </button>
-					</form>
-					</td>
 					</tr>						
 					</tbody>
-
 				</table>
-           
           </div>
        </div>
    </div>
@@ -281,21 +265,19 @@
 
 
 <script>
-    
-
     function getData(){
         fetch("http://localhost/back-end/api/proveedores/read.php")
         .then(res=>res.json())
         .then(data=>{
             data.data.forEach(element => {
                 let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` <td>${element.nombre}</td> 
-                                        <td>${element.correo}</td>
+                tableRow.innerHTML =  ` <td>${element.idproveedor}</td> 
+                                        <td>${element.nombre}</td> 
+                                        <td>${element.email}</td>
                                         <td>${element.telefono}</td>
                                         <td>${element.direccion}</td>
-
-                                        <a href="modificarProveedor.html?id=${element.id}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
-                                        <a onclick="eliminarProveedor(event, ${element.id})" class="btn btn-danger">Eliminar</a>
+                                        <a href="modificarProveedor.html?id=${element.idproveedor}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
+                                        <a onclick="eliminarProveedor(event, ${element.idproveedor})" class="btn btn-danger">Eliminar</a>
                                         `
                 listaProveedores.appendChild(tableRow)
             });
@@ -318,4 +300,3 @@
 
     
 </script>
-//
