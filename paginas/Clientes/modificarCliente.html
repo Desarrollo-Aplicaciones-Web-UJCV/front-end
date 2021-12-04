@@ -46,14 +46,14 @@
           <div class="sidebar-brand-text mx-3">Ferreteria Central</div>
         </a>
         
-         <!-- Divider -->
-         <hr class="sidebar-divider my-0">
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
 
-         <li class="nav-item active">
-           <a class="nav-link" href="../indexAdministrador.html">
-               <i class="fas fa-fw fa-cogs"></i>
-               <span>Panel de Administración</span></a>
-         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="../indexAdministrador.html">
+              <i class="fas fa-fw fa-cogs"></i>
+              <span>Panel de Administración</span></a>
+      </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider" />
@@ -105,7 +105,13 @@
             </a>
         </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
 
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
       </ul>
       <!-- End of Sidebar -->
 
@@ -148,7 +154,7 @@
                   aria-expanded="false"
                 >
                   <span class="mr-2 d-none d-lg-inline text-white-600 small"
-                    >Eduin Flores</span
+                    >Admin</span
                   >
                   <img
                     class="img-profile rounded-circle"
@@ -186,43 +192,37 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    	<h1 class="h3 mb-0 text-gray-800">Ingrese el Nuevo Proveedor</h1>
-
+                    	<h1 class="h3 mb-0 text-gray-800" style="text-align : center">Modificar Cliente</h1>
                     </div>
                     <!-- Begin Page Content -->
 
     		<!-- Content Row -->
          	<div class="row">
                 <div class="col-lg-6 m-auto">
-                    <form id="formAgregar" autocomplete="off">
+                    <form id="formModificar" autocomplete="off">
                     
                         <div class="form-group">
-                            <label for="idproveedor">Rtn</label>
-                            <input type="text" class="form-control" placeholder="Ingrese el Rtn" name="idproveedor" id="idproveedor" pattern="\d*" maxlength="14">
+                            <label for="id">Id</label>
+                            <input type="text" class="form-control" placeholder="Ingrese el id del cliente" name="id" id="id">
                         </div>
+
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" placeholder="Ingrese el Nombre" name="nombre" id="nombre">
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Correo Electrónico</label>
-                            <input type="email" class="form-control" placeholder="Ingrese el Correo Electronico" name="email" id="email">
+                            <label for="telefono">Telefono</label>
+                            <input type="text" class="form-control" placeholder="Ingrese el Telefono" name="telefono" id="telefono">
                         </div>
 
                         <div class="form-group">
-                            <label for="telefono">Teléfono</label>
-                            <input type="number" class="form-control" placeholder="Ingrese el Telefono" name="telefono" id="telefono">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="direccion">Dirección</label>
+                            <label for="direccion">Direccion</label>
                             <input type="text" class="form-control" placeholder="Ingrese la Direccion" name="direccion" id="direccion">
                         </div>
                         <br>
-                        <input type="submit" value="Guardar Proveedor" class="btn btn-primary">
-                        <a href="mostrarProveedor.html" class="btn btn-danger">Regresar</a>
-                        <br>
+                        <button class="btn btn-primary">Editar</button>
+                        <a href="mostrarClientes.html" class="btn btn-danger">Regresar</a>                        
                         <br>
                     </form>
                 </div>
@@ -295,29 +295,56 @@
 
 
 <script>
-formAgregar.addEventListener('submit',(target)=>{
-    target.preventDefault()
-    let rtn = document.getElementById('idproveedor').value
-    let nombre = document.getElementById('nombre').value
-    let email = document.getElementById('email').value
-    let telefono = document.getElementById('telefono').value
-    let direccion = document.getElementById('direccion').value
-    let datos = {  
-    idproveedor: rtn,
-	  nombre: nombre,
-	  email: email,
-	  telefono: telefono,
-    direccion: direccion
+
+    var id
+    function obtenerId(){
+        let param = new URLSearchParams(window.location.search)
+        id = param.get("id")
     }
-    let opciones = {
-      method:"POST",
-      body: JSON.stringify(datos)
+    obtenerId();
+
+    formModificar.addEventListener("submit", (target)=>{
+        target.preventDefault()
+        modificarCliente()
+    })
+
+    function obtenerCliente(){
+        let id = document.getElementById("id");
+	      let nombre = document.getElementById("nombre");
+        let telefono = document.getElementById("telefono");
+        let direccion = document.getElementById("direccion");
+
+        fetch(`http://localhost/back-end/api/clientes/read_single.php?id=${id}`)
+        .then(response=>response.json())
+        .then(data =>{
+          id.value = data.id
+            nombre.value = data.nombre
+	          telefono.value = data.telefono
+            direccion.value = data.direccion
+        })
     }
+    obtenerCliente();
     
-           var idProv = document.getElementById("idproveedor").value;
+
+    function modificarCliente(){
+        let nombre = document.getElementById("nombre")
+	      let telefono = document.getElementById("telefono")
+        let direccion = document.getElementById("direccion")
+        
+        var data = {
+            id: id,
+            nombre: nombre.value,
+	          telefono: telefono.value,
+            direccion: direccion.value
+        }
+        const options = {
+            method: "PUT",
+            body:JSON.stringify(data)
+        }
+      var idProv = document.getElementById("id").value;
      console.log(detalles)
      let datos = {
-        idproveedor: idProv,
+        id: idProv,
         nombre:detalles
     }
     console.log(localStorage.getItem('token'))
@@ -326,18 +353,19 @@ formAgregar.addEventListener('submit',(target)=>{
         headers:{"Authorization":`${localStorage.getItem('token')}`},
       body: JSON.stringify(datos)
     }
-    fetch("http://localhost/back-end/api/proveedores/create.php", opciones)
-    .then(response=>response.json())
-    .then(data=>{ 
-        if (data.code === 0){
-            alert("Proveedor agregado");
-	        window.location.replace("mostrarProveedor.html")
+
+        fetch("http://localhost/back-end/api/clientes/update.php", options)
+        .then(response=>response.json())
+        .then(data =>{
+	if (data.code === 0){
+            alert("Información del cliente actualizada.")
+	    window.location.replace("mostrarClientes.html")
           }else{
-            alert("Error al agregar el proveedor");
-          }         
-    })
-    formAgregar.reset();
-  })
+            alert("Error al modificar cliente")
+          }     
+        })
+    }
 
 
 </script>
+//

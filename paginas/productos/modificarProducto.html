@@ -62,7 +62,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="../ventas/indexVentas.html">
                     <img src="../../img/ventas1.png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Ventas</span>
@@ -224,6 +224,20 @@
     })
 
     function obtenerProducto(){
+        var idProv = document.getElementById("idProducto").value;
+     console.log(detalles)
+     let datos = {
+        idProducto: idProv,
+        descripcion:detalles
+    }
+    console.log(localStorage.getItem('token'))
+    let opciones = {
+      method:"POST",
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
+      body: JSON.stringify(datos)
+    }
+
+
         let descripcion = document.getElementById("descripcion");
         let precioVenta = document.getElementById("precioVenta");
 

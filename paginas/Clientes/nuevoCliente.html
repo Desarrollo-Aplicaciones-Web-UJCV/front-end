@@ -186,7 +186,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    	<h1 class="h3 mb-0 text-gray-800">Ingrese el Nuevo Proveedor</h1>
+                    	<h1 class="h3 mb-0 text-gray-800">Ingrese el Nuevo Cliente</h1>
 
                     </div>
                     <!-- Begin Page Content -->
@@ -197,17 +197,12 @@
                     <form id="formAgregar" autocomplete="off">
                     
                         <div class="form-group">
-                            <label for="idproveedor">Rtn</label>
-                            <input type="text" class="form-control" placeholder="Ingrese el Rtn" name="idproveedor" id="idproveedor" pattern="\d*" maxlength="14">
+                            <label for="id">id</label>
+                            <input type="text" class="form-control" placeholder="Ingrese el id del cliente" name="id" id="id" pattern="\d*" maxlength="14">
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" placeholder="Ingrese el Nombre" name="nombre" id="nombre">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Correo Electrónico</label>
-                            <input type="email" class="form-control" placeholder="Ingrese el Correo Electronico" name="email" id="email">
                         </div>
 
                         <div class="form-group">
@@ -220,8 +215,8 @@
                             <input type="text" class="form-control" placeholder="Ingrese la Direccion" name="direccion" id="direccion">
                         </div>
                         <br>
-                        <input type="submit" value="Guardar Proveedor" class="btn btn-primary">
-                        <a href="mostrarProveedor.html" class="btn btn-danger">Regresar</a>
+                        <input type="submit" value="Guardar Cliente" class="btn btn-primary">
+                        <a href="mostrarClientes.html" class="btn btn-danger">Regresar</a>
                         <br>
                         <br>
                     </form>
@@ -297,15 +292,13 @@
 <script>
 formAgregar.addEventListener('submit',(target)=>{
     target.preventDefault()
-    let rtn = document.getElementById('idproveedor').value
+    let id = document.getElementById('id').value
     let nombre = document.getElementById('nombre').value
-    let email = document.getElementById('email').value
     let telefono = document.getElementById('telefono').value
     let direccion = document.getElementById('direccion').value
     let datos = {  
-    idproveedor: rtn,
+    id: id,
 	  nombre: nombre,
-	  email: email,
 	  telefono: telefono,
     direccion: direccion
     }
@@ -313,11 +306,11 @@ formAgregar.addEventListener('submit',(target)=>{
       method:"POST",
       body: JSON.stringify(datos)
     }
-    
-           var idProv = document.getElementById("idproveedor").value;
+
+     var idProv = document.getElementById("id").value;
      console.log(detalles)
      let datos = {
-        idproveedor: idProv,
+        id: idProv,
         nombre:detalles
     }
     console.log(localStorage.getItem('token'))
@@ -326,14 +319,14 @@ formAgregar.addEventListener('submit',(target)=>{
         headers:{"Authorization":`${localStorage.getItem('token')}`},
       body: JSON.stringify(datos)
     }
-    fetch("http://localhost/back-end/api/proveedores/create.php", opciones)
+    fetch("http://localhost/back-end/api/clientes/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
         if (data.code === 0){
-            alert("Proveedor agregado");
-	        window.location.replace("mostrarProveedor.html")
+            alert("Cliente agregado");
+	        window.location.replace("mostrarClientes.html")
           }else{
-            alert("Error al agregar el proveedor");
+            alert("Error al agregar el cliente");
           }         
     })
     formAgregar.reset();

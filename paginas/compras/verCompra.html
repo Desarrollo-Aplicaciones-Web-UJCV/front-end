@@ -59,7 +59,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="../ventas/indexVentas.html">
                     <img src="../../img/ventas1.png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Ventas</span>
@@ -298,7 +298,20 @@
 
  }
     function llenarDatosProveedor(){
-        var id = document.getElementById("RTNProveedor").value;
+        var idProv = document.getElementById("RTNProveedor").value;
+        console.log(detalles)
+     let datos = {
+        idProveedor: idProv,
+          detalleCompra:detalles
+    }
+      console.log(localStorage.getItem('token'))
+    let opciones = {
+         method:"POST",
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
+      body: JSON.stringify(datos)
+    }
+
+
         fetch(`http://localhost/back-end/api/proveedores/read_single.php?id=${id}`)
         .then(response=>response.json())
         .then(data =>{

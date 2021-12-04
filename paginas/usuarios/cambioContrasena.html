@@ -54,14 +54,14 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="../ventas/indexVentas.html">
                     <img src="../../img/ventas1.png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Ventas</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="mostrarUsuarios.html">
                     <img src="../../img/usuario (1).png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Usuarios</span>
@@ -219,7 +219,18 @@ formAgregar.addEventListener('submit',(target)=>{
       body: JSON.stringify(datos)
     }
 
-    
+          var idProv = document.getElementById("idUsuario").value;
+     console.log(detalles)
+     let datos = {
+        idUsuario: idProv,
+        nombre:detalles
+    }
+    console.log(localStorage.getItem('token'))
+    let opciones = {
+      method:"POST",
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
+      body: JSON.stringify(datos)
+    }
     fetch("http://localhost/back-end/api/usuarios/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
@@ -239,6 +250,18 @@ formAgregar.addEventListener('submit',(target)=>{
   }
 
   function obtenerRoles(){
+          var idProv = document.getElementById("idUsuario").value;
+     console.log(detalles)
+     let datos = {
+        idUsuario: idProv,
+        nombre:detalles
+    }
+    console.log(localStorage.getItem('token'))
+    let opciones = {
+      method:"POST",
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
+      body: JSON.stringify(datos)
+    }
     fetch("http://localhost/back-end/api/roles/read.php")
     .then(response=>response.json())
     .then(data=>{
