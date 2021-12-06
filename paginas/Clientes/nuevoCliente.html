@@ -304,20 +304,9 @@ formAgregar.addEventListener('submit',(target)=>{
     }
     let opciones = {
       method:"POST",
+      headers:{"Authorization":`${localStorage.getItem('token')}`},
       body: JSON.stringify(datos)
-    }
 
-     var idProv = document.getElementById("id").value;
-     console.log(detalles)
-     let datos = {
-        id: idProv,
-        nombre:detalles
-    }
-    console.log(localStorage.getItem('token'))
-    let opciones = {
-      method:"POST",
-        headers:{"Authorization":`${localStorage.getItem('token')}`},
-      body: JSON.stringify(datos)
     }
     fetch("http://localhost/back-end/api/clientes/create.php", opciones)
     .then(response=>response.json())

@@ -312,14 +312,7 @@ formAgregar.addEventListener('submit',(target)=>{
     let opciones = {
       method:"POST",
       body: JSON.stringify(datos)
-    }
-    
-           var idProv = document.getElementById("idproveedor").value;
-     console.log(detalles)
-     let datos = {
-        idproveedor: idProv,
-        nombre:detalles
-    }
+    }     
     console.log(localStorage.getItem('token'))
     let opciones = {
       method:"POST",

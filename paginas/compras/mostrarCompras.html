@@ -202,18 +202,7 @@
 </html>
 <script>
     function getData(){
-        var idProv = document.getElementById("RTNProveedor").value;
-     console.log(detalles)
-     let datos = {
-        idProveedor: idProv,
-        detalleCompra:detalles
-    }
-    console.log(localStorage.getItem('token'))
-    let opciones = {
-      method:"POST",
-        headers:{"Authorization":`${localStorage.getItem('token')}`},
-      body: JSON.stringify(datos)
-    }
+    
         fetch("http://localhost/back-end/api/compras/read_head.php")
         .then(res=>res.json())
         .then(data=>{

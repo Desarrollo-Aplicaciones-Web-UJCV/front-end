@@ -293,14 +293,6 @@ function encontrarProveedor(){
 
 
  function anadirProducto(){
-    var id = document.getElementById("codProducto").value;
-    if(id == ""){
-        document.getElementById('descripcionProd').innerHTML = "      -";
-        disable("agregarProducto");
-        disable("cantidad");
-        disable("precioCompra");
-        return;
-    }
     fetch(`http://localhost/back-end/api/productos/read_single.php?id=${id}`)
     .then(response=>response.json())
     .then(data =>{
@@ -400,6 +392,7 @@ function encontrarProveedor(){
         detalleCompra:detalles
     }
     console.log(localStorage.getItem('token'))
+    
     let opciones = {
       method:"POST",
         headers:{"Authorization":`${localStorage.getItem('token')}`},

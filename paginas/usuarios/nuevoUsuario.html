@@ -267,7 +267,16 @@ formAgregar.addEventListener('submit',(target)=>{
       var claveConfirma = document.getElementById('claveConfirma').value
       return(clave == claveConfirma)
     }
-
+ let datos = {
+        Calve: clave,
+        Clavec:claveConfirma
+    }
+    console.log(localStorage.getItem('token'))
+    let opciones = {
+      method:"POST",
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
+      body: JSON.stringify(datos)
+    }
     fetch("http://localhost/back-end/api/usuarios/create.php", opciones)
     .then(response=>response.json())
     .then(data=>{ 
@@ -284,18 +293,6 @@ formAgregar.addEventListener('submit',(target)=>{
 
   function obtenerRoles(){
 
-           var idProv = document.getElementById("idUsuario").value;
-     console.log(detalles)
-     let datos = {
-        idUsuario: idProv,
-        nombre:detalles
-    }
-    console.log(localStorage.getItem('token'))
-    let opciones = {
-      method:"POST",
-        headers:{"Authorization":`${localStorage.getItem('token')}`},
-      body: JSON.stringify(datos)
-    }
     fetch("http://localhost/back-end/api/roles/read.php")
     .then(response=>response.json())
     .then(data=>{

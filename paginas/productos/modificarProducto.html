@@ -260,8 +260,12 @@
             descripcion: descripcion.value,
             precioVenta: precioVenta.value
         }
+
+       
         const options = {
             method: "PUT",
+
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
             body:JSON.stringify(data)
         }
         fetch("http://localhost/back-end/api/productos/update.php", options)

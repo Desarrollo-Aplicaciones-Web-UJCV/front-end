@@ -321,11 +321,11 @@
         let telefono = document.getElementById("telefono");
         let direccion = document.getElementById("direccion");
 
-           var idProv = document.getElementById("idproveedor").value;
-     console.log(detalles)
      let datos = {
-        idproveedor: idProv,
-        nombre:detalles
+        Rtn: rtn,
+        Nombre:nombre,
+        Email: email,
+        telefono:telefono
     }
     console.log(localStorage.getItem('token'))
     let opciones = {

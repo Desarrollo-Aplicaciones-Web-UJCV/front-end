@@ -244,18 +244,7 @@
 
     function getData(){
 
-              var idProv = document.getElementById("idUsuario").value;
-     console.log(detalles)
-     let datos = {
-        idUsuario: idProv,
-        nombre:detalles
-    }
-    console.log(localStorage.getItem('token'))
-    let opciones = {
-      method:"POST",
-        headers:{"Authorization":`${localStorage.getItem('token')}`},
-      body: JSON.stringify(datos)
-    }
+        
         fetch("http://localhost/back-end/api/usuarios/read.php")
         .then(res=>res.json())
         .then(data=>{

@@ -341,18 +341,11 @@
             method: "PUT",
             body:JSON.stringify(data)
         }
-      var idProv = document.getElementById("id").value;
-     console.log(detalles)
-     let datos = {
-        id: idProv,
-        nombre:detalles
-    }
-    console.log(localStorage.getItem('token'))
-    let opciones = {
+       let opciones = {
       method:"POST",
         headers:{"Authorization":`${localStorage.getItem('token')}`},
-      body: JSON.stringify(datos)
-    }
+      body: JSON.stringify(data)
+      }
 
         fetch("http://localhost/back-end/api/clientes/update.php", options)
         .then(response=>response.json())

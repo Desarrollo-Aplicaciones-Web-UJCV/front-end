@@ -260,6 +260,19 @@
         let usuario = document.getElementById("usuario")
         let RTNProveedor = document.getElementById("RTNProveedor")
         let fechaHora = document.getElementById("fecha")
+
+
+        let datos = {
+        Usuario: usuario,
+        FechaHora:fechaHora
+         }
+         console.log(localStorage.getItem('token'))
+         let opciones = {
+         method:"POST",
+        headers:{"Authorization":`${localStorage.getItem('token')}`},
+           body: JSON.stringify(datos)
+         }
+
         fetch(`http://localhost/back-end/api/compras/read_single.php?id=${id}`)
         .then(response=>response.json())
         .then(data =>{
@@ -299,18 +312,17 @@
  }
     function llenarDatosProveedor(){
         var idProv = document.getElementById("RTNProveedor").value;
-        console.log(detalles)
-     let datos = {
-        idProveedor: idProv,
-          detalleCompra:detalles
-    }
+         console.log(detalles)
+         let datos = {
+         idProveedor: idProv,
+        detalleCompra:detalles
+         }
       console.log(localStorage.getItem('token'))
-    let opciones = {
+        let opciones = {
          method:"POST",
         headers:{"Authorization":`${localStorage.getItem('token')}`},
-      body: JSON.stringify(datos)
-    }
-
+        body: JSON.stringify(datos)
+         }
 
         fetch(`http://localhost/back-end/api/proveedores/read_single.php?id=${id}`)
         .then(response=>response.json())
