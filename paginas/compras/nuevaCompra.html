@@ -325,13 +325,11 @@ function encontrarProveedor(){
         disable("btnGuardarCompra");
     }
 
-    for(var i = rowCount; i > 0; i--){
-        var totalDetalle = parseFloat(document.getElementById("t"+i+"").innerText);
+    for(var i = 0; i < detalles.length; i++){
+        var totalDetalle = detalles[i].precioCompra * detalles[i].cantidad;
         total = totalDetalle + total;
     }
     document.getElementById("totalFinal").innerText = total;
-    
-
  }
 
  function calcularTotalDetalle(){
@@ -363,7 +361,7 @@ function encontrarProveedor(){
      }
      detalles.push(elemento)
 
-		html += "<tr id="+rowCount+"><td>"+codigoProd+"</td>";
+		html += "<tr id=r"+rowCount+"><td id="+rowCount+">"+codigoProd+"</td>";
 		html += "<td>"+descripcion+"</td>";
 		html += "<td>"+cantidad+"</td>";
 		html += "<td>"+precio+"</td>";
@@ -376,7 +374,13 @@ function encontrarProveedor(){
  }
 
  function quitarDetalle(rowId){
-    document.getElementById(rowId).remove();
+    var idProducto = document.getElementById(rowId).innerHTML;
+    for(var i = 0 ; i < detalles.length ; i++){
+        if(detalles[i].idProducto == idProducto){
+            detalles.splice(i,1);
+        }
+    }
+    document.getElementById("r"+rowId).remove();
     calcularTotal();
  }
 
@@ -393,12 +397,10 @@ function encontrarProveedor(){
  function guardarCompra(){
 
     var idProv = document.getElementById("RTNProveedor").value;
-     console.log(detalles)
      let datos = {
         idProveedor: idProv,
         detalleCompra:detalles
     }
-    console.log(localStorage.getItem('token'))
     let opciones = {
       method:"POST",
         headers:{"Authorization":`${localStorage.getItem('token')}`},
@@ -411,7 +413,7 @@ function encontrarProveedor(){
         if (data.code === 0){
             alert("Compra registrada.")
           }else{
-            alert(data.message)
+            alert(data.message + " " + data.errmessage)
           }         
     })
  }
