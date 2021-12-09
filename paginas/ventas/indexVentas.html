@@ -487,7 +487,8 @@
   .then(response=>response.json())
   .then(data=>{ 
     if (data.code === 0){
-        alert("Venta registrada.");
+      alert("Venta registrada.");
+        window.open('http://localhost/back-end/api/fatura/generaFactura.php?id='+data.idventa, '_blank');
         document.location.reload(true);
       }else{
         alert(data.message)
