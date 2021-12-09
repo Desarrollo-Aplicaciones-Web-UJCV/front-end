@@ -411,7 +411,8 @@ function encontrarProveedor(){
     .then(response=>response.json())
     .then(data=>{ 
         if (data.code === 0){
-            alert("Compra registrada.")
+            alert("Compra registrada.");
+            document.location.reload(true);
           }else{
             alert(data.message + " " + data.errmessage)
           }         
