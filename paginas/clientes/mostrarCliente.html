@@ -186,23 +186,20 @@
             <div class="row">
             <div class="col-lg-12">
             <div class="form-group">
-                <h4 class="text-center">Proveedores</h4>
-		<a href="nuevoProveedor.html" class="btn btn-primary">Nuevo</a>
+                <h4 class="text-center">Clientes</h4>
+		<a href="nuevoCliente.html" class="btn btn-primary">Nuevo</a>
 		<br>
 		<br>
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered" id="table">
 					<thead class="thead-dark">
 						<tr>
-							<th>Rtn</th>
+							<th>Identidad</th>
 							<th>Nombre</th>
-              <th>Correo</th>
-							<th>Teléfono</th>
-							<th>Dirección</th>
-							<th>Acciones</th>
+              <th>Acciones</th>
 						</tr>
 					</thead>
-					<tbody id=listaProveedores>
+					<tbody id=listaClientes>
 					</tr>						
 					</tbody>
 				</table>
@@ -275,37 +272,21 @@
 
 <script>
     function getData(){
-        fetch("http://localhost/back-end/api/proveedores/read.php")
+        fetch("http://localhost/back-end/api/clientes/read.php")
         .then(res=>res.json())
         .then(data=>{
             data.data.forEach(element => {
                 let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` <td>${element.idproveedor}</td> 
-                                        <td>${element.nombre}</td> 
-                                        <td>${element.email}</td>
-                                        <td>${element.telefono}</td>
-                                        <td>${element.direccion}</td>
-                                        <a href="modificarProveedor.html?id=${element.idproveedor}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
-                                        <a onclick="eliminarProveedor(event, ${element.idproveedor})" class="btn btn-danger">Eliminar</a>
+                tableRow.innerHTML =  ` <td>${element.idcliente}</td> 
+                                        <td>${element.nombre}</td>
+                                        <a href="modificarCliente.html?id=${element.idcliente}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
                                         `
-                listaProveedores.appendChild(tableRow)
+                listaClientes.appendChild(tableRow)
             });
 
         })
         .catch(error=>console.log(error))      
         
     }
-    getData()
-
-    function eliminarProveedor(event,id){
-        fetch(`http://localhost/back-end/api/proveedores/delete.php?id=${id}`).then(response => response.json()).then((data) => {
-            event.target.parentElement.remove()
-            alert(data.message)
-        })
-    }
-
-    
-
-
-    
+    getData();
 </script>
