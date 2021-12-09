@@ -135,6 +135,7 @@
     <!-- Inicio de Mostar -->
         <br>
             <a href="nuevoProducto.html" id="boton" class="btn btn-primary">Agregar</a>
+            <button onclick="imprimir()" class="btn btn-primary">Imprimir</button>
             <br>
 
             <div class="row">
@@ -238,6 +239,10 @@
             event.target.parentElement.remove()
             alert(data.message)
         })
+    }
+
+    function imprimir(){
+      window.open('http://localhost/back-end/api/fatura/reporteProductos.php', '_blank');
     }
 
 </script>

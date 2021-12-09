@@ -188,6 +188,7 @@
             <div class="form-group">
                 <h4 class="text-center">Proveedores</h4>
 		<a href="nuevoProveedor.html" class="btn btn-primary">Nuevo</a>
+    <button onclick="imprimir()" class="btn btn-primary">Imprimir</button>
 		<br>
 		<br>
 			<div class="table-responsive">
@@ -304,8 +305,8 @@
         })
     }
 
-    
+    function imprimir(){
+      window.open('http://localhost/back-end/api/fatura/reporteProveedores.php', '_blank');
+    }
 
-
-    
 </script>
