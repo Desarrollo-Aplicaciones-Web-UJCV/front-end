@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="shortcut icon" href="../../img/logo-icono.png">
     <title>Sistema de Ventas</title>
 
     <!-- Custom fonts for this template-->
@@ -31,7 +31,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../indexAdministrador.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../../index.html">
                 <div class="sidebar-brand-icon">
                     <img src="../../img/logo-icono.png" >
                     <!-- <i class="fas fa-user"></i> -->
@@ -59,16 +59,45 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="../ventas/mostrarVentas.html">
+                <a class="nav-link collapsed" href="#">
                     <img src="../../img/ventas1.png">
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Ventas</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="./mostrarCompras.html">
-                    <img src="../../img/carrito-de-compras.png">
-                    <span>Compras</span>
+                <a class="nav-link collapsed" href="#">
+                  <img src="../../img/productos1.png" />
+                  <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                  <span>Productos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="">
+                  <img src="../../img/clientes1.png" />
+                  <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                  <span>Clientes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                  <img src="../../img/inventario1.png" />
+                  <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                  <span>Proveedores</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                  <img src="../../img/carrito-de-compras.png" />
+                  <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                  <span>Compras</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="mostrarUsuarios.html">
+                  <img src="../../img/usuario (1).png" />
+                  <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                  <span>Usuarios</span>
                 </a>
             </li> 
 
@@ -130,9 +159,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <h4 class="text-center">Datos del Proveedor</h4>
-                                <a href="../proveedores/nuevoProveedor.html" class="btn btn-primary btn_new_cliente"><i class="fas fa-user-plus"></i> Nuevo Proveedor</a>
-                                <a href="mostrarCompras.html" class="btn btn-danger">Compras</a>
+                                <h4 class="text-center">Datos de la Venta</h4>
+                                <a href="mostrarVentas.html" class="btn btn-danger">Regresar</a>
                             </div>
                             <div class="card">
                                 <div class="card-body">
@@ -142,20 +170,14 @@
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label>RTN</label>
-                                                    <input type="text" autofocus name="RTNProveedor" id="RTNProveedor" class="form-control" onblur="encontrarProveedor()" maxlength="14">
+                                                    <label>Dni</label>
+                                                    <input type="number" name="dni_cliente" id="dni_cliente" class="form-control" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label>Nombre</label>
-                                                    <input type="text" name="nomProveedor" id="nomProveedor" class="form-control" disabled required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label>Teléfono</label>
-                                                    <input type="number" name="telProveedor" id="telProveedor" class="form-control" disabled required>
+                                                    <input type="text" name="nom_cliente" id="nom_cliente" class="form-control" disabled >
                                                 </div>
                                             </div>
                                         </div>
@@ -163,17 +185,17 @@
                                 </div>
                             </div>
                             <br>
-                            <h4 class="text-center">Datos Compra</h4>
+                            <h4 class="text-center">Detalle de Venta</h4>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label><i class="fas fa-user"></i> COMPRADOR</label>
-                                        <p style="font-size: 16px; text-transform: uppercase; color: blue;">Usuario Actual</p>
+                                        <label><i class="fas fa-user"></i> VENDEDOR</label>
+                                        <p style="font-size: 16px; text-transform: uppercase; color: blue;" id="usuario"></p>
                                     </div>
                                 </div>
-                                <div class="col-lg-6" style="padding-left: 350px;">
+                                <div class="col-lg-6" style="padding-left: 320px;">
                                     <div class="form-group">
-                                        <label>Fecha de Hoy</label>
+                                        <label>Fecha de Compra</label>
                                         <p id="fecha" style="font-size: 16px; text-transform: uppercase;"></p>
                                     </div>
                             </div>
@@ -181,31 +203,14 @@
                                 <table class="table table-hover" id="tabla">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th width="100px">Código Producto</th>
-                                            <th>Descripción</th>
-                                            <th width="100px">Cantidad</th>
-                                            <th class="textright">Precio Compra</th>
-                                            <th class="textright">Precio Total</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="number" name="codProducto" id="codProducto" oninput="anadirProducto()"></td>
-                                            <td id="descripcionProd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-</td>
-                                            <td><input type="text" style="width: 50px" name="cantidad" id="cantidad" oninput="calcularTotalDetalle()" value="0" min="1" disabled></td>
-                                            <td><input type="text" name="precioCompra" id="precioCompra" oninput="calcularTotalDetalle()"value="0.00" min="1" disabled></td>
-                                            <td id="totalDetalle" class="txtright">0.00</td>
-                                            <td><button href="#" id="agregarProducto" class="btn btn-primary" onclick="agregarDetalleCompra()" disabled>Agregar</button></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Código</th>
+                                            <th>Código Producto</th>
                                             <th colspan="1">Descripción</th>
                                             <th>Cantidad</th>
-                                            <th class="textright">Precio</th>
+                                            <th class="textright">Precio Venta</th>
                                             <th class="textright">Precio Total</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="detalleCompra">
+                                    <tbody id="detalleVenta">
                                         <!-- Contenido ajax -->
                                     </tbody>
 
@@ -215,7 +220,6 @@
                                         <td></td>
                                         <td>Lps.</td>
                                         <td id="totalFinal"></td>
-                                        <td><button class="btn btn-primary" id="btnGuardarCompra" onclick="guardarCompra()" disabled><i class="fas fa-save" style="padding-right: 3px;"></i>Guardar Compra</button></td>
                                         <!-- Contenido ajax -->
                                     </tfoot>
                                 </table>
@@ -266,162 +270,62 @@
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
 </body>
-
 </html>
 <script>
-    var detalles=[];
-    var fecha = new Date();
-    document.getElementById("fecha").innerHTML = fecha.toLocaleString();
+    var id
+    function obtenerId(){
+        let param = new URLSearchParams(window.location.search)
+        id = param.get("id")        
+    }
+    obtenerId();
 
-function encontrarProveedor(){
-    var id = document.getElementById("RTNProveedor").value;
-    
-        fetch(`http://localhost/back-end/api/proveedores/read_single.php?id=${id}`)
+    function obtenerDatosVenta(){
+        let usuario = document.getElementById("usuario")
+        let dni_cliente = document.getElementById("dni_cliente")
+        let fechaHora = document.getElementById("fecha")
+        fetch(`http://localhost/back-end/api/ventas/read_single.php?id=${id}`)
         .then(response=>response.json())
         .then(data =>{
-            document.getElementById('nomProveedor').value = data.nombre;
-            document.getElementById('telProveedor').value = data.telefono;
-        })
-        .catch(err =>{
-            alert('No se encontró ningun proveedor con el RTN especificado.')
-            document.getElementById('RTNProveedor').value = ""
-            document.getElementById('nomProveedor').value = "";
-            document.getElementById('telProveedor').value = "";
-            document.getElementById('RTNProveedor').focus()
+        
+            usuario.innerHTML = data.usuario;
+            dni_cliente.value = data.cliente;
+            llenarDatosCliente();
+            fechaHora.innerHTML = data.fechaHora;
+
+            html = document.getElementById("detalleVenta").innerHTML;
+            for(var i = 0; i < data.detalleventa.length ; i++){
+                var total = data.detalleventa[i].cantidad * data.detalleventa[i].precioVenta;
+                html += "<tr><td>"+data.detalleventa[i].idProducto+"</td>";
+                html += "<td>"+data.detalleventa[i].NombreProducto+"</td>";
+                html += "<td>"+data.detalleventa[i].cantidad+"</td>";
+                html += "<td>"+data.detalleventa[i].precioVenta+"</td>";
+                html += "<td id=t"+i+">"+total+"</td></tr>";
+            }
+            document.getElementById('detalleVenta').innerHTML = html;
+            calcularTotal();
         })
     }
+    obtenerDatosVenta();
 
-
- function anadirProducto(){
-    var id = document.getElementById("codProducto").value;
-    if(id == ""){
-        document.getElementById('descripcionProd').innerHTML = "      -";
-        disable("agregarProducto");
-        disable("cantidad");
-        disable("precioCompra");
-        return;
-    }
-    fetch(`http://localhost/back-end/api/productos/read_single.php?id=${id}`)
-    .then(response=>response.json())
-    .then(data =>{
-        if(data.descripcion == null){
-            document.getElementById('descripcionProd').innerHTML = "      -";
-            return;
-        }
-        document.getElementById('descripcionProd').innerHTML = data.descripcion;
-        enable("cantidad");
-        enable("precioCompra");
-    }) 
- }
-
- function calcularTotal(){
+    function calcularTotal(){
     var total = 0;
     var table = document.getElementById("tabla");
     var tbodyRowCount = table.tBodies[0].rows.length;
-    if(tbodyRowCount > 0){
-        enable("btnGuardarCompra");
-    }else{
-        document.getElementById("totalFinal").innerText = "";
-        disable("btnGuardarCompra");
-    }
 
-    for(var i = 0; i < detalles.length; i++){
-        var totalDetalle = detalles[i].precioCompra * detalles[i].cantidad;
+    for(var i = 0; i < tbodyRowCount; i++){
+        var totalDetalle = parseFloat(document.getElementById("t"+i+"").innerText);
         total = totalDetalle + total;
     }
     document.getElementById("totalFinal").innerText = total;
- }
-
- function calcularTotalDetalle(){
-    var cantidad = document.getElementById("cantidad").value;
-    var precioCompra = document.getElementById("precioCompra").value;
-    var total = cantidad * precioCompra;
-
-    document.getElementById("totalDetalle").innerHTML = total;
-    if(total > 0.00){
-        enable("agregarProducto");
-    }else{
-        disable("agregarProducto");
     }
- }
 
- var rowCount = 1;
- function agregarDetalleCompra(){
-        var codigoProd = document.getElementById("codProducto").value;
-        var descripcion = document.getElementById("descripcionProd").innerText;
-        var cantidad = document.getElementById("cantidad").value;
-        var precio = document.getElementById("precioCompra").value;
-        var total = document.getElementById("totalDetalle").innerText;
+    function llenarDatosCliente(){
+        var id = document.getElementById("dni_cliente").value;
+        fetch(`http://localhost/back-end/api/clientes/read_single.php?id=${id}`)
+        .then(response=>response.json())
+        .then(data =>{
+        document.getElementById('nom_cliente').value = data.nombre;
+    }) 
 
-        html = document.getElementById("detalleCompra").innerHTML;
-     let elemento = {
-         idProducto: +codigoProd,
-         cantidad: +cantidad,
-         precioCompra: +precio
-     }
-     detalles.push(elemento)
-
-		html += "<tr id=r"+rowCount+"><td id="+rowCount+">"+codigoProd+"</td>";
-		html += "<td>"+descripcion+"</td>";
-		html += "<td>"+cantidad+"</td>";
-		html += "<td>"+precio+"</td>";
-		html += "<td id=t"+rowCount+">"+total+"</td> ";
-		html += `<td><button class="btn btn-danger" onclick="quitarDetalle(`+rowCount+`)">-</button></td></tr>`;
-		document.getElementById('detalleCompra').innerHTML = html;
-        reiniciarCamposCompra();
-        calcularTotal();
-        rowCount++;
- }
-
- function quitarDetalle(rowId){
-    var idProducto = document.getElementById(rowId).innerHTML;
-    for(var i = 0 ; i < detalles.length ; i++){
-        if(detalles[i].idProducto == idProducto){
-            detalles.splice(i,1);
-        }
     }
-    document.getElementById("r"+rowId).remove();
-    calcularTotal();
- }
-
- function reiniciarCamposCompra(){
-    disable("agregarProducto");
-    disable("cantidad");
-    disable("precioCompra");
-    document.getElementById('cantidad').value = "0";
-    document.getElementById('precioCompra').value = "0.00";
-    document.getElementById('totalDetalle').value = "0.00";
-    document.getElementById('codProducto').value = "";
- }
-
- function guardarCompra(){
-
-    var idProv = document.getElementById("RTNProveedor").value;
-     let datos = {
-        idProveedor: idProv,
-        detalleCompra:detalles
-    }
-    let opciones = {
-      method:"POST",
-        headers:{"Authorization":`${localStorage.getItem('token')}`},
-      body: JSON.stringify(datos)
-    }
-    
-    fetch("http://localhost/back-end/api/compras/create.php", opciones)
-    .then(response=>response.json())
-    .then(data=>{ 
-        if (data.code === 0){
-            alert("Compra registrada.");
-            document.location.reload(true);
-          }else{
-            alert(data.message + " " + data.errmessage)
-          }         
-    })
- }
-
- function disable(name)
-  { document.getElementById(""+name+"").disabled = true; } 
- function enable(name) 
- { document.getElementById(""+name+"").disabled = false; }
-
 </script>

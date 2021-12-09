@@ -9,7 +9,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="shortcut icon" href="/img/logo-icono.png">
+    <link rel="shortcut icon" href="../../img/logo-icono.png">
     <title>Sistema de Ventas</title>
 
     <!-- Custom fonts for this template-->
@@ -106,7 +106,14 @@
               <span>Usuarios</span>
             </a>
         </li>
+        
+         <!-- Divider -->
+         <hr class="sidebar-divider">
 
+         <!-- Sidebar Toggler (Sidebar) -->
+         <div class="text-center d-none d-md-inline">
+             <button class="rounded-circle border-0" id="sidebarToggle"></button>
+         </div>
 
       </ul>
       <!-- End of Sidebar -->
@@ -189,8 +196,8 @@
             <div class="col-lg-12">
             <div class="form-group">
                 <h4 class="text-center">Datos del Cliente</h4>
-                <a href="#" class="btn btn-primary btn_new_cliente"><i class="fas fa-user-plus"></i> Nuevo Cliente</a>
-                <a href="ventas.php" class="btn btn-danger">Ventas</a>
+                <a href="../clientes/nuevoCliente.html" class="btn btn-primary btn_new_cliente"><i class="fas fa-user-plus"></i> Nuevo Cliente</a>
+                <a href="mostrarVentas.html" class="btn btn-danger">Ventas</a>
             </div>
 
             <div class="card">
@@ -202,7 +209,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Dni</label>
-                                    <input type="number" name="dni_cliente" id="dni_cliente" class="form-control">
+                                    <input type="number" autofocus name="dni_cliente" id="dni_cliente" class="form-control" onblur="encontrarCliente()" maxlength="14">
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -211,19 +218,7 @@
                                     <input type="text" name="nom_cliente" id="nom_cliente" class="form-control" disabled required>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Teléfono</label>
-                                    <input type="number" name="tel_cliente" id="tel_cliente" class="form-control" disabled required>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label>Dirreción</label>
-                                    <input type="text" name="dir_cliente" id="dir_cliente" class="form-control" disabled required>
-                                </div>
-
-                            </div>
+                            
                             <div id="div_registro_cliente" style="display: none;">
                                 <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
@@ -233,60 +228,64 @@
             </div>
             <br>
             <h4 class="text-center">Datos de Venta</h4>
-           <div class="row">
-               <div class="col-lg-6">
-                   <div class="form-group">
-                       <label><i class="fas fa-user"></i> VENDEDOR</label>
-                       <p style="font-size: 16px; text-transform: uppercase; color: blue;"><?php echo $_SESSION['nombre']; ?></p>
-                   </div>
-               </div>
-               <div class="col-lg-6">
-                   <label>Acciones</label>
-                   <div id="acciones_venta" class="form-group">
-                       <a href="#" class="btn btn-danger" id="btn_anular_venta">Anular</a>
-                       <a href="#" class="btn btn-primary" id="btn_facturar_venta"><i class="fas fa-save"></i> Generar Venta</a>
-                   </div>
-               </div>
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="form-group">
+                      <label><i class="fas fa-user"></i> VENDEDOR</label>
+                      <p style="font-size: 16px; text-transform: uppercase; color: blue;">Usuario Actual</p>
+                  </div>
+              </div>
+              <div class="col-lg-6" style="padding-left: 350px;">
+                  <div class="form-group">
+                      <label>Fecha de Hoy</label>
+                      <p id="fecha" style="font-size: 16px; text-transform: uppercase;"></p>
+                  </div>
+          </div>
            </div>
            <div class="table-responsive">
-               <table class="table table-hover">
+               <table class="table table-hover" id="tabla">
                    <thead class="thead-dark">
                        <tr>
                            <th width="100px">Código</th>
                            <th>Descripción</th>
-                           <th>Stock</th>
+                           <!-- <th>Stock</th>  -->
                            <th width="100px">Cantidad</th>
                            <th class="textright">Precio</th>
                            <th class="textright">Precio Total</th>
                            <th>Acciones</th>
                        </tr>
                        <tr>
-                           <td><input type="number" name="txt_cod_producto" id="txt_cod_producto"></td>
-                           <td id="txt_descripcion">-</td>
-                           <td id="txt_existencia">-</td>
-                           <td><input type="text" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
-                           <td id="txt_precio" class="textright">0.00</td>
-                           <td id="txt_precio_total" class="txtright">0.00</td>
-                           <td><a href="#" id="add_product_venta" class="btn btn-dark" style="display: none;">Agregar</a></td>
-                       </tr>
+                        <td><input type="number" name="codProducto" id="codProducto" oninput="anadirProducto()"></td>
+                        <td id="descripcionProd">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+                        <td><input type="text" style="width: 50px" name="cantidad" id="cantidad" oninput="calcularTotalDetalle()" value="0" min="1" disabled></td>
+                        <td id="PrecioVenta" oninput="calcularTotalDetalle()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-</td>
+                        <td id="totalDetalle" class="txtright">0.00</td>
+                        <td><button href="#" id="agregarProducto" class="btn btn-primary" onclick="agregarDetalleCompra()" disabled>Agregar</button></td>
+                   </tr>
                        <tr>
                            <th>Código</th>
                            <th colspan="">Descripción</th>
-                           <th>Stock</th>
+                           <!-- <th>Stock</th>  -->
                            <th>Cantidad</th>
                            <th class="textright">Precio</th>
                            <th class="textright">Precio Total</th>
                            <th>Acciones</th>
                        </tr>
                    </thead>
-                   <tbody id="detalle_venta">
+                   <tbody id="detalleVenta">
                        <!-- Contenido ajax -->
 
                    </tbody>
 
                    <tfoot id="detalle_totales">
-                       <!-- Contenido ajax -->
-                   </tfoot>
+                    <th>Total</th>
+                    <td></td>
+                    <td></td>
+                    <td id="PrecioVenta">Lps.</td>
+                    <td id="totalFinal"></td>
+                    <td><button class="btn btn-primary" id="btnGuardarCompra" onclick="guardarCompra()" disabled><i class="fas fa-save" style="padding-right: 3px;" ></i>Guardar Venta</button></td>
+                    <!-- Contenido ajax -->
+                </tfoot>
                </table>
 
            </div>
@@ -355,3 +354,153 @@
     <script src="../../vendor/chart.js/Chart.min.js"></script>
   </body>
 </html>
+
+<script>
+    
+    var detalles=[];
+    var fecha = new Date();
+    document.getElementById("fecha").innerHTML = fecha.toLocaleString();
+
+  function encontrarCliente(){
+    var id = document.getElementById("dni_cliente").value;
+        fetch(`http://localhost/back-end/api/clientes/read_single.php?id=${id}`)
+        .then(response=>response.json())
+        .then(data =>{
+            document.getElementById('nom_cliente').value = data.nombre;
+        })
+        .catch(err =>{
+            alert('No se encontró ningun cliente con el DNI especificado.')
+            document.getElementById('dni_cliente').value = ""
+            document.getElementById('nom_cliente').value = "";
+            document.getElementById('dni_cliente').focus()
+        })
+  }
+
+  function anadirProducto(){
+    var id = document.getElementById("codProducto").value;
+    if(id == ""){
+        document.getElementById('descripcionProd').innerHTML = "      -";
+        document.getElementById('PrecioVenta').innerHTML = "      -";
+        disable("agregarProducto");
+        disable("cantidad");
+        disable("precioVenta");
+        return;
+    }
+    fetch(`http://localhost/back-end/api/productos/read_single.php?id=${id}`)
+    .then(response=>response.json())
+    .then(data =>{
+        if(data.descripcion == null){
+            document.getElementById('descripcionProd').innerHTML = "      -";
+            return;
+        }
+        document.getElementById('descripcionProd').innerHTML = data.descripcion;
+        document.getElementById('PrecioVenta').innerHTML = data.precioVenta;
+        enable("cantidad");
+    }) 
+  }
+
+  function calcularTotal(){
+    var total = 0;
+    var table = document.getElementById("tabla");
+    var tbodyRowCount = table.tBodies[0].rows.length;
+    if(tbodyRowCount > 0){
+        enable("btnGuardarCompra");
+    }else{
+        document.getElementById("totalFinal").innerText = "";
+        disable("btnGuardarCompra");
+    }
+    for(var i = 0; i < detalles.length; i++){
+        var totalDetalle = detalles[i].precioVenta * detalles[i].cantidad;
+        total = totalDetalle + total;
+    }
+    document.getElementById("totalFinal").innerText = total;
+ }
+
+ function calcularTotalDetalle(){
+    var cantidad = document.getElementById("cantidad").value;
+    var precio = document.getElementById("PrecioVenta").innerText;
+    var total = cantidad * precio;
+    document.getElementById("totalDetalle").innerHTML = total;
+    if(total > 0.00){
+        enable("agregarProducto");
+    }else{
+        disable("agregarProducto");
+    }
+  }
+
+ var rowCount = 1;
+ function agregarDetalleCompra(){
+        var codigoProd = document.getElementById("codProducto").value;
+        var descripcion = document.getElementById("descripcionProd").innerText;
+        var cantidad = document.getElementById("cantidad").value;
+        var precio = document.getElementById("PrecioVenta").innerText;
+        var total = document.getElementById("totalDetalle").innerText;
+        html = document.getElementById("detalleVenta").innerHTML;
+     let elemento = {
+         idProducto: +codigoProd,
+         cantidad: +cantidad,
+         precioVenta: +precio
+     }
+     detalles.push(elemento);
+		html += "<tr id=r"+rowCount+"><td id="+rowCount+">"+codigoProd+"</td>";
+		html += "<td>"+descripcion+"</td>";
+		html += "<td>"+cantidad+"</td>";
+		html += "<td>"+precio+"</td>";
+		html += "<td id=t"+rowCount+">"+total+"</td> ";
+		html += `<td><button class="btn btn-danger" onclick="quitarDetalle(`+rowCount+`)">-</button></td></tr>`;
+		document.getElementById('detalleVenta').innerHTML = html;
+        reiniciarCamposCompra();
+        calcularTotal();
+        rowCount++;
+ }
+
+ function quitarDetalle(rowId){
+    var idProducto = document.getElementById(rowId).innerHTML;
+    for(var i = 0 ; i < detalles.length ; i++){
+        if(detalles[i].idProducto == idProducto){
+            detalles.splice(i,1);
+        }
+    }
+    document.getElementById("r"+rowId).remove();
+    calcularTotal();
+ }
+
+ function reiniciarCamposCompra(){
+    document.getElementById('cantidad').value = "0";
+    document.getElementById('PrecioVenta').innerText = "0.00";
+    document.getElementById('totalDetalle').innerText = "0.00";
+    document.getElementById('codProducto').value = "";
+ }
+
+ function guardarCompra(){
+  var idClien = document.getElementById("dni_cliente").value;
+  console.log(detalles)
+  let datos = {
+    idCliente: idClien,
+    detalleVenta:detalles
+  }
+  let opciones = {
+    method:"POST",
+    headers:{"Authorization":`${localStorage.getItem('token')}`},
+    body: JSON.stringify(datos)
+  }
+
+  fetch("http://localhost/back-end/api/ventas/create.php", opciones)
+  .then(response=>response.json())
+  .then(data=>{ 
+    if (data.code === 0){
+        alert("Venta registrada.");
+        document.location.reload(true);
+      }else{
+        alert(data.message)
+      }         
+  })
+  form_new_cliente_venta.reset();
+  }
+  
+function disable(name)
+  { document.getElementById(""+name+"").disabled = true; } 
+function enable(name) 
+ { document.getElementById(""+name+"").disabled = false; }
+ 
+</script>

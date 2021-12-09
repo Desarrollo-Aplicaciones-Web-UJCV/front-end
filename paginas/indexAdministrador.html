@@ -414,35 +414,36 @@
                   <div class="card-header bg-primary text-white">
                     Datos de la Empresa
                   </div>
+                  <form id="formDatos">
                   <div class="card-body">
                     <div class="p-3">
                       <div class="form-group">
                         <strong>RTN:</strong>
-                        <input type="text" name="rtn" id="rtn" class="form-control">
+                        <input type="text" name="rtn" id="rtn" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <strong>Nombre:</strong>
-                        <input type="text" name="nombre" id="nombre" class="form-control">
+                        <input type="text" name="nombre" id="nombre" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <strong>Razón Social:</strong>
-                        <input type="text" name="razonsocial" id="razonsocial" class="form-control">
+                        <input type="text" name="razonsocial" id="razonsocial" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <strong>Teléfono:</strong>
-                        <input type="text" name="telefono" id="telefono" class="form-control">
+                        <input type="text" name="telefono" id="telefono" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <strong>Correo Electrónico:</strong>
-                        <input type="text" name="correo" id="correo" class="form-control">
+                        <input type="text" name="correo" id="correo" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <strong>Dirección:</strong>
-                        <input type="text" name="direccion" id="direccion" class="form-control">
+                        <input type="text" name="direccion" id="direccion" class="form-control" required>
                       </div>
                       <div class="form-group">
-                        <strong>IGV (%):</strong>
-                        <input type="text" name="igv" id="igv" class="form-control">
+                        <strong>ISV (%):</strong>
+                        <input type="text" name="igv" id="igv" class="form-control" required>
                       </div>
                       <div>
                         <button
@@ -454,6 +455,7 @@
                       </div>
                     </div>
                   </div>
+                </form>
                 </div>
               </div>
             </div>
@@ -526,4 +528,155 @@
     <script src="../vendor/chart.js/Chart.min.js"></script>
   </body>
 </html>
-//
+<script>
+  var codigo = 0;
+    
+    formDatos.addEventListener('submit',(target)=>{
+      target.preventDefault()
+      actualizarConfiguracion();
+    })
+  
+  function getDatosConfiguracion(){
+    let rtn = document.getElementById('rtn')
+    let nombre = document.getElementById('nombre')
+    let razonSocial = document.getElementById('razonsocial')
+    let telefono = document.getElementById("telefono")
+    let correo = document.getElementById('correo')
+    let direccion = document.getElementById('direccion')
+    let IGV = document.getElementById('igv')
+    fetch(`http://localhost/back-end/api/configuracion/read.php`)
+      .then(res=>res.json())
+      .then(data=>{
+        if(data.code == 1){
+          codigo = 1;
+          return;
+        }
+        console.log(data);
+        rtn.value = data.rtn;
+        nombre.value = data.nombre;
+        razonSocial.value = data.razonSocial;
+        telefono.value = data.telefono;
+        correo.value = data.email;
+        direccion.value = data.direccion;
+        IGV.value = data.IGV;
+      });
+  }
+  getDatosConfiguracion();
+  
+  function actualizarConfiguracion(){
+      if(codigo == 1){
+        createConfiguracion();
+      }else{
+        updateConfiguracion();
+      }
+  }
+  
+  function createConfiguracion(){
+    let rtn = document.getElementById('rtn').value
+    let nombre = document.getElementById('nombre').value
+    let razonSocial = document.getElementById('razonsocial').value
+    let telefono = document.getElementById('telefono').value
+    let correo = document.getElementById('correo').value
+    let direccion = document.getElementById('direccion').value
+    let IGV = document.getElementById('igv').value
+    let datos = {
+          rtn : rtn,
+          nombre: nombre,
+          razonSocial: razonSocial,
+          telefono: telefono,
+          email: correo,
+          direccion: direccion,
+          IGV : IGV
+      }
+      
+  
+      let opciones = {
+        method:"POST",
+        body: JSON.stringify(datos)
+      }
+    fetch(`http://localhost/back-end/api/configuracion/create.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        if(data.code == 0){
+          alert("Configuracion guardada exotisamente.");
+          codigo = 0;
+          getDatosConfiguracion();
+        }else{
+          alert("No se pudo guardar la configuracion.");
+        }
+      });
+  }
+  
+  function updateConfiguracion(){
+    let rtn = document.getElementById('rtn').value
+    let nombre = document.getElementById('nombre').value
+    let razonSocial = document.getElementById('razonsocial').value
+    let telefono = document.getElementById("telefono").value
+    let correo = document.getElementById('correo').value
+    let direccion = document.getElementById('direccion').value
+    let IGV = document.getElementById('igv').value
+    let datos = {
+          rtn : rtn,
+          nombre: nombre,
+          razonSocial: razonSocial,
+          telefono: telefono,
+          email: correo,
+          direccion: direccion,
+          IGV : IGV
+      }
+        let opciones = {
+        method:"POST",
+        body: JSON.stringify(datos)
+      }
+    fetch(`http://localhost/back-end/api/configuracion/update.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        if(data.code == 0){
+          alert("Configuracion actualizada exotisamente.");
+        }else{
+          alert("No se pudo actualizar la configuracion.");
+        }
+      });
+  
+  }
+    
+  
+  // function getUserCount(){
+  //   let cuentaUsuarios = document.getElementById("countUsuarios")
+  //     fetch(`http://localhost/back-end/api/usuarios/get_user_count.php`)
+  //     .then(res=>res.json())
+  //     .then(data=>{
+  //       cuentaUsuarios.innerText = data.count;
+  //     });
+  // }
+  // getUserCount();
+
+  function getCurrentUser(){
+    let opciones = {
+      method:"GET",
+      headers:{"Authorization":`${localStorage.getItem('token')}`}
+    }
+    fetch(`http://localhost/back-end/api/usuarios/verify_token.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        llenarDatosUsuario(data.user);
+      });
+  }
+  getCurrentUser();
+
+  function llenarDatosUsuario(idUsr){
+    let usuario = document.getElementById('usrSpan')
+    let nombrePersona = document.getElementById('nombrePersona')
+    let correo = document.getElementById('correo')
+    let rol = document.getElementById('rol')
+    fetch(`http://localhost/back-end/api/usuarios/read_single.php?id=${idUsr}`)
+      .then(res=>res.json())
+      .then(data=>{
+        nombrePersona.innerText = data.nombre;
+        usuario.innerText = data.nombre;
+        correo
+        console.log(data);
+  });
+}
+
+</script>
