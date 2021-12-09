@@ -196,6 +196,7 @@
 						<tr>
 							<th>Identidad</th>
 							<th>Nombre</th>
+              <th>Acciones</th>
 						</tr>
 					</thead>
 					<tbody id=listaClientes>
@@ -279,7 +280,6 @@
                 tableRow.innerHTML =  ` <td>${element.idcliente}</td> 
                                         <td>${element.nombre}</td>
                                         <a href="modificarCliente.html?id=${element.idcliente}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
-                                        <a onclick="eliminarCliente(event, ${element.idcliente})" class="btn btn-danger">Eliminar</a>
                                         `
                 listaClientes.appendChild(tableRow)
             });
@@ -288,17 +288,5 @@
         .catch(error=>console.log(error))      
         
     }
-    getData()
-
-    function eliminarCliente(event,id){
-        fetch(`http://localhost/back-end/api/clientes/delete.php?id=${id}`).then(response => response.json()).then((data) => {
-            event.target.parentElement.remove()
-            alert(data.message)
-        })
-    }
-
-    
-
-
-    
+    getData();
 </script>
