@@ -235,7 +235,12 @@
 
 <script>
 
-
+var id
+    function obtenerId(){
+        let param = new URLSearchParams(window.location.search)
+        id = param.get("id")        
+    }
+    obtenerId();
     
     formModificar.addEventListener("submit", (target)=>{
         target.preventDefault()
@@ -245,12 +250,11 @@
     function obtenerCliente(){
         let idcliente = document.getElementById("idcliente")
         let nombre = document.getElementById("nombre")
-        let nombreCliente = document.getElementById("nombreCliente")
     
         fetch(`http://localhost/back-end/api/clientes/read_single.php?id=${id}`)
         .then(response=>response.json())
         .then(data =>{
-            idcliente.value = data.idcliente
+            idcliente.value = data.id
             nombre.value = data.nombre
      
         })
@@ -265,7 +269,7 @@
         let nombre = document.getElementById("nombre")
     
         var data = {
-            idcliente: cliente.value,
+            idcliente: idcliente.value,
             nombre: nombre.value
     
         }
