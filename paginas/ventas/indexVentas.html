@@ -366,13 +366,11 @@
         fetch(`http://localhost/back-end/api/clientes/read_single.php?id=${id}`)
         .then(response=>response.json())
         .then(data =>{
+          if(data.nombre == null){
+            alert("No se encontro un cliente con ese DNI.");
+            return;
+          }
             document.getElementById('nom_cliente').value = data.nombre;
-        })
-        .catch(err =>{
-            alert('No se encontró ningun cliente con el DNI especificado.')
-            document.getElementById('dni_cliente').value = ""
-            document.getElementById('nom_cliente').value = "";
-            document.getElementById('dni_cliente').focus()
         })
   }
 
@@ -489,7 +487,8 @@
   .then(response=>response.json())
   .then(data=>{ 
     if (data.code === 0){
-        alert("Venta registrada.");
+      alert("Venta registrada.");
+        window.open('http://localhost/back-end/api/fatura/generaFactura.php?id='+data.idventa, '_blank');
         document.location.reload(true);
       }else{
         alert(data.message)

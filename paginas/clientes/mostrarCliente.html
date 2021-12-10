@@ -188,6 +188,7 @@
             <div class="form-group">
                 <h4 class="text-center">Clientes</h4>
 		<a href="nuevoCliente.html" class="btn btn-primary">Nuevo</a>
+    <button onclick="imprimir()" class="btn btn-primary">Imprimir</button>
 		<br>
 		<br>
 			<div class="table-responsive">
@@ -289,4 +290,8 @@
         
     }
     getData();
+
+    function imprimir(){
+      window.open('http://localhost/back-end/api/fatura/reporteClientes.php', '_blank');
+    }
 </script>

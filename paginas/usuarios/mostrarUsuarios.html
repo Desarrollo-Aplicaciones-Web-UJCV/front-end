@@ -168,6 +168,7 @@
     <!-- Inicio de Mostar -->
         <br>
             <a href="nuevoUsuario.html" id="boton" class="btn btn-primary">Agregar</a>
+            <button onclick="imprimir()" class="btn btn-primary">Imprimir</button>
             <br>
 
             <div class="row">
@@ -271,8 +272,9 @@
         })
     }
 
-    
+    function imprimir(){
+      window.open('http://localhost/back-end/api/fatura/reporteUsuarios.php', '_blank');
+    }
 
 
-    
 </script>
