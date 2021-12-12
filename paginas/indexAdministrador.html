@@ -356,15 +356,15 @@
                       <form action="" method=" post" name="frmChangePass" id="frmChangePass" class="p-3" >
                         <div class="form-group">
                           <label>Contraseña Actual</label>
-                          <input type="password" name="actual" id="actual" required class="form-control"/>
+                          <input type="password" name="actual" id="actual" required class="form-control" required/>
                         </div>
                         <div class="form-group">
                           <label>Nueva Contraseña</label>
-                          <input type="password" name="nueva" id="nueva" required class="form-control"/>
+                          <input type="password" name="nueva" id="nueva" required class="form-control" required/>
                         </div>
                         <div class="form-group">
                           <label>Confirmar Contraseña</label>
-                          <input type="password" name="confirmar" id="confirmar" required class="form-control"/>
+                          <input type="password" name="confirmar" id="confirmar" required class="form-control" required/>
                         </div>
                         <div class="alertChangePass" style="display: none"></div>
                         <div>
@@ -654,13 +654,14 @@
       method:"POST",
       body : JSON.stringify(datos)
     }
-    fetch(`localhost/back-end/api/usuarios/change_pass.php`,opciones)
+    fetch(`http://localhost/back-end/api/usuarios/change_pass.php`,opciones)
     .then(response=>response.json())
     .then(data=>{ 
-        if (data.code === 0){
+        if (data.code == 0){
             alert("Contraseña actualizada");
+            frmChangePass.reset();
           }else{
-            alert("Error al actualizar la contraseña");
+            alert(data.error.message);
           }         
     })
   }

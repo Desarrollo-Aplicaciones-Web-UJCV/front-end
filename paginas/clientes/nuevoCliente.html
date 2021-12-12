@@ -147,9 +147,7 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span class="mr-2 d-none d-lg-inline text-white-600 small"
-                    >Eduin Flores</span
-                  >
+                  <span class="mr-2 d-none d-lg-inline text-white-600 small" id="usrSpan"></span>
                   <img
                     class="img-profile rounded-circle"
                     src="../../img/undraw_profile.svg"
@@ -280,6 +278,20 @@
 
 
 <script>
+  function getCurrentUser(){
+    let usuario = document.getElementById('usrSpan')
+    let opciones = {
+      method:"GET",
+      headers:{"Authorization":`${localStorage.getItem('token')}`}
+    }
+    fetch(`http://localhost/back-end/api/usuarios/read_logged_user.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        usuario.innerText = data.nombre;
+      });
+  }
+  getCurrentUser();
+  
 formAgregar.addEventListener('submit',(target)=>{
     target.preventDefault()
     let idcliente = document.getElementById('idcliente').value
