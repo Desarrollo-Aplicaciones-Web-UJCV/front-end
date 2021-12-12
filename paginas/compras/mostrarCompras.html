@@ -225,6 +225,12 @@
 
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
@@ -242,27 +248,26 @@
       });
   }
   getCurrentUser();
-  
+    getData();
     function getData(){
         fetch("http://localhost/back-end/api/compras/read_head.php")
         .then(res=>res.json())
         .then(data=>{
+          html = "";
             data.data.forEach(element => {
-                let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` <td>${element.idcompra}</td> 
-                                        <td>${element.fechaHora}</td>
-                                        <td>${element.total}</td>
-                                        <td>${element.NombreUsuario}</td>
-                                        <td>${element.NombreProveedor}</td>
-                                        <a href="verCompra.html?id=${element.idcompra}" class="btn btn-primary"><i class="fas fa-fw fa-eye mr-2"></i>Ver</a>
-                                        `
-                listaCompras.appendChild(tableRow)
+                html += `<tr><td>${element.idcompra}</td>`
+                html += `<td>${element.fechaHora}</td>`
+                html += `<td>${element.total}</td>`
+                html += `<td>${element.NombreUsuario}</td>`
+                html += `<td>${element.NombreProveedor}</td>`
+                html += `<td><a href="verCompra.html?id=${element.idcompra}" class="btn btn-primary"><i class="fas fa-fw fa-eye mr-2"></i>Ver</a></td></tr>`;
             });
-
+            document.getElementById('listaCompras').innerHTML = html
+            $(document).ready( function () {
+            $('#table').DataTable();
+               } ); 
         })
-        .catch(error=>console.log(error))      
-        
-    }
-    getData();
+        .catch(error=>console.log(error))       
+     }
 
 </script>

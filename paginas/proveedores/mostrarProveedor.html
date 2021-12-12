@@ -268,6 +268,13 @@
 
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
+     <!-- Page level plugins -->
+     <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+     <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+ 
+     <!-- Page level custom scripts -->
+     <script src="../../js/demo/datatables-demo.js"></script>
+ </body>
   </body>
 </html>
 
@@ -287,27 +294,28 @@
   }
   getCurrentUser();
 
+    getData()
+
     function getData(){
         fetch("http://localhost/back-end/api/proveedores/read.php")
         .then(res=>res.json())
         .then(data=>{
+          html = "";
             data.data.forEach(element => {
-                let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` <td>${element.idproveedor}</td> 
-                                        <td>${element.nombre}</td> 
-                                        <td>${element.email}</td>
-                                        <td>${element.telefono}</td>
-                                        <td>${element.direccion}</td>
-                                        <a href="modificarProveedor.html?id=${element.idproveedor}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
-                                        `
-                listaProveedores.appendChild(tableRow)
+              html += `<tr><td>${element.idproveedor}</td>`
+				      html += `<td>${element.nombre}</td>`
+				      html += `<td>${element.email}</td>`
+				      html += `<td>${element.telefono}</td>`
+              html += `<td>${element.direccion}</td>`
+              html += `<td><a href="modificarProveedor.html?id=${element.idproveedor}" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i>Modificar</a></td></tr>`;
             });
-
+            document.getElementById('listaProveedores').innerHTML = html
+            $(document).ready( function () {
+            $('#table').DataTable();
+               } ); 
         })
-        .catch(error=>console.log(error))      
-        
-    }
-    getData()
+        .catch(error=>console.log(error))       
+     }
 
     function eliminarProveedor(event,id){
         fetch(`http://localhost/back-end/api/proveedores/delete.php?id=${id}`).then(response => response.json()).then((data) => {

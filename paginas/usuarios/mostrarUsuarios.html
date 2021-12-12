@@ -151,7 +151,7 @@
               <div class="col lg-12">
                 <div class="form-group">
                     <h4 class="text-center" style="font-size: 50px;">Usuarios</h4>
-                    <a href="nuevoUsuario.html" class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i>Agregar</a>
+                    <a href="nuevoUsuario.html" class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i>Nuevo</a>
                     <button onclick="imprimir()" class="btn btn-primary"><i class="fas fa-fw fa-print"></i>Imprimir</button>
                     <br>
                     <br>
@@ -167,6 +167,7 @@
                               </tr>
                             </thead>
                                 <tbody id="listaUsuarios">
+                                 
                                 </tbody>
                           </table>
                       </div>
@@ -218,11 +219,19 @@
 
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
 
 <script>
+getData()
+
     function getCurrentUser(){
     let usuario = document.getElementById('usrSpan')
     let opciones = {
@@ -237,26 +246,28 @@
   }
   getCurrentUser();
 
+    
+
     function getData(){
         fetch("http://localhost/back-end/api/usuarios/read.php")
         .then(res=>res.json())
         .then(data=>{
+          html = "";
             data.data.forEach(element => {
-                let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` <td>${element.nombre}</td> 
-                                        <td>${element.correo}</td>
-                                        <td>${element.nombreUsuario}</td>
-                                        <td>${element.rol}</td>
-                                        <a href="modificarUsuario.html?id=${element.id}" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i>Modificar</a>
-                                        `
-                listaUsuarios.appendChild(tableRow)
+              html += "<tr><td>"+element.nombre+"</td>"
+				      html += "<td>"+element.correo+"</td>"
+				      html += "<td>"+element.nombreUsuario+"</td>"
+				      html += "<td>"+element.rol+"</td>"
+              html += `<td><a href="modificarUsuario.html?id=${element.id}" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i>Modificar</a></td></tr>`;
             });
-
+            document.getElementById('listaUsuarios').innerHTML = html
+            $(document).ready( function () {
+            $('#table').DataTable();
+               } ); 
         })
-        .catch(error=>console.log(error))      
-        
-    }
-    getData()
+        .catch(error=>console.log(error))       
+     }
+   
 
     function eliminarUsuario(event,id){
         fetch(`http://localhost/back-end/api/usuarios/delete.php?id=${id}`).then(response => response.json()).then((data) => {

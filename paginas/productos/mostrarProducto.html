@@ -158,7 +158,7 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <h4 class="text-center" style="font-size:50px;">Productos</h4>
-                                <a href="nuevoProducto.html"  class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i>Agregar</a>
+                                <a href="nuevoProducto.html"  class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i>Nuevo</a>
                                 <button onclick="imprimir()" class="btn btn-primary"><i class="fas fa-fw fa-print"></i>Imprimir</button>
                                 <br>
                                 <br>
@@ -223,6 +223,12 @@
 
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
@@ -243,27 +249,26 @@
   getCurrentUser();
 
 
+    getData()
+
     function getData(){
         fetch("http://localhost/back-end/api/productos/read.php")
         .then(res=>res.json())
         .then(data=>{
+          html = "";
             data.data.forEach(element => {
-                console.log(data);
-                let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` 
-                                        <td>${element.idproducto}</td> 
-                                        <td>${element.descripcion}</td> 
-                                        <td>${element.precioVenta}</td>
-                                        <a href="modificarProducto.html?id=${element.idproducto}" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i>Modificar</a>
-                                        `
-                listaProductos.appendChild(tableRow)
+                html += `<tr><td>${element.idproducto}</td>`
+                html += `<td>${element.descripcion}</td>`
+                html += `<td>${element.precioVenta}</td>`
+                html += `<td><a href="modificarProducto.html?id=${element.idproducto}" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i>Modificar</a></td></tr>`;
             });
-
+            document.getElementById('listaProductos').innerHTML = html
+            $(document).ready( function () {
+            $('#table').DataTable();
+               } ); 
         })
-        .catch(error=>console.log(error))      
-        
-    }
-    getData()
+        .catch(error=>console.log(error))       
+     }
 
     function eliminarProducto(event,id){
         fetch(`http://localhost/back-end/api/productos/delete.php?id=${id}`).then(response => response.json()).then((data) => {
