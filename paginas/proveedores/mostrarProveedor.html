@@ -150,7 +150,7 @@
                   <span class="mr-2 d-none d-lg-inline text-white-600 small" id="usrSpan"></span>
                   <img
                     class="img-profile rounded-circle"
-                    src="../../img/undraw_profile.svg"
+                    src="../../img/usuario.png"
                   />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -184,9 +184,9 @@
             <div class="row">
             <div class="col-lg-12">
             <div class="form-group">
-                <h4 class="text-center">Proveedores</h4>
-		<a href="nuevoProveedor.html" class="btn btn-primary">Nuevo</a>
-    <button onclick="imprimir()" class="btn btn-primary">Imprimir</button>
+                <h4 class="text-center" style="font-size: 50px;">Proveedores</h4>
+		<a href="nuevoProveedor.html" class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i>Nuevo</a>
+    <button onclick="imprimir()" class="btn btn-primary"><i class="fas fa-fw fa-print"></i>Imprimir</button>
 		<br>
 		<br>
 			<div class="table-responsive">
@@ -299,7 +299,6 @@
                                         <td>${element.telefono}</td>
                                         <td>${element.direccion}</td>
                                         <a href="modificarProveedor.html?id=${element.idproveedor}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
-                                        <a onclick="eliminarProveedor(event, ${element.idproveedor})" class="btn btn-danger">Eliminar</a>
                                         `
                 listaProveedores.appendChild(tableRow)
             });
