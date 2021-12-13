@@ -387,37 +387,33 @@
                     <div class="p-3">
                       <div class="form-group">
                         <strong>RTN:</strong>
-                        <input type="text" name="rtn" id="rtn" class="form-control" maxLength="14" pattern="\d*" required>
+                        <input type="text" name="rtn" id="rtn" class="form-control" maxLength="14" pattern="\d*" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Nombre:</strong>
-                        <input type="text" name="nombre" id="nombre" class="form-control" maxlength="25" required>
+                        <input type="text" name="nombre" id="nombre" class="form-control" maxlength="25" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Razón Social:</strong>
-                        <input type="text" name="razonsocial" id="razonsocial" class="form-control" maxlength="30" required>
+                        <input type="text" name="razonsocial" id="razonsocial" class="form-control" maxlength="30" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Teléfono:</strong>
-                        <input type="text" name="telefono" id="telefono" class="form-control" maxlength="8" pattern="\d*" required>
+                        <input type="text" name="telefono" id="telefono" class="form-control" maxlength="8" pattern="\d*" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Correo Electrónico:</strong>
-                        <input type="email" name="email" id="email" class="form-control" required>
+                        <input type="email" name="email" id="email" class="form-control" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Dirección:</strong>
-                        <input type="text" name="direccion" id="direccion" class="form-control" maxlength="50" required>
+                        <input type="text" name="direccion" id="direccion" class="form-control" maxlength="50" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>ISV (%):</strong>
-                        <input type="text" name="igv" id="igv" class="form-control" maxlength="4" pattern="[\d.]*" required>
+                        <input type="text" name="igv" id="igv" class="form-control" maxlength="4" pattern="[\d.]*" required disabled>
                       </div>
-                      <div>
-                        <button type="submit" class="btn btn-primary btnChangePass">
-                          Guardar Datos
-                        </button>
-                      </div>
+                  
                     </div>
                   </div>
                 </form>
@@ -676,7 +672,6 @@
       divClientes.innerText = data.clientes
       divProductos.innerText = data.productos
       divVentas.innerText = data.ventas
-
     })
   })
 
