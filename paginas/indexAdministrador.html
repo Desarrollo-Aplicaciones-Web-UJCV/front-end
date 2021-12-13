@@ -215,8 +215,8 @@
                         >
                           Usuarios
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          4
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="divUsuarios">
+                          
                         </div>
                       </div>
                       <div class="col-auto">
@@ -243,8 +243,8 @@
                         >
                           Clientes
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          5
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="divClientes">
+                          
                         </div>
                       </div>
                       <div class="col-auto">
@@ -281,8 +281,9 @@
                                 font-weight-bold
                                 text-gray-800
                               "
+                              id="divProductos"
                             >
-                              5
+                              
                             </div>
                           </div>
                         </div>
@@ -313,8 +314,8 @@
                         >
                           Ventas
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          18
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="divVentas">
+                          
                         </div>
                       </div>
                       <div class="col-auto">
@@ -665,5 +666,18 @@
           }         
     })
   }
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost/back-end/api/usuarios/get_admin_dashboard_info.php')
+    .then(response => response.json())
+    .then(data => {
+      divUsuarios.innerText = data.usuarios
+      divClientes.innerText = data.clientes
+      divProductos.innerText = data.productos
+      divVentas.innerText = data.ventas
+
+    })
+  })
 
 </script>
