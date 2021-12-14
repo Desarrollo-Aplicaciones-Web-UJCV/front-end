@@ -164,9 +164,16 @@
                         <a href="nuevaCompra.html" class="btn btn-danger"><i class="fas fa-fw fa-plus-circle mr-2"></i>Nueva compra</a>
                     </div>
                     <div class="d-sm-flex align-items-center mb-2">
-                        <label for="fechaBusqueda" class="mt-2 mr-3">Fecha:</label>
-                        <input type="date" id="fechaBusqueda" placeholder="Fecha" style="width: 170px;" class="form-control">
-                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        <div class="d-sm-flex align-items-center  mr-3">
+                            <label for="fechaInicial" class="mt-2 mr-3">Desde:</label>
+                            <input type="date" id="fechaInicial" style="width: 170px;"  class="form-control">
+                        </div>
+                        
+                        <div class="d-sm-flex align-items-center mr-3">
+                            <label for="fechaFinal" class="mt-2 mr-3">Hasta:</label>
+                            <input type="date" id="fechaFinal" style="width: 170px;" class="form-control" >
+                        </div>
+                        <button class="btn btn-primary" onclick="getData()"><i class="fas fa-clipboard-list mr-2"></i>Listar</button>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
@@ -240,6 +247,14 @@
 
 </html>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+       let date = new Date()
+       console.log(date)
+       document.getElementById('fechaInicial').value = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+       document.getElementById('fechaFinal').value = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+
+    });
+
     function getCurrentUser(){
     let usuario = document.getElementById('usrSpan')
     let opciones = {
@@ -253,11 +268,21 @@
       });
   }
   getCurrentUser();
-    getData();
-    function getData(){
-        fetch("http://localhost/back-end/api/compras/read_head.php")
+
+
+
+function getData(){
+        let fechaInicial = document.getElementById('fechaInicial').value
+        let fechaFinal = document.getElementById('fechaFinal').value
+        fetch(`http://localhost/back-end/api/compras/read_head.php?initDate=${fechaInicial}&endDate=${fechaFinal}`)
         .then(res=>res.json())
         .then(data=>{
+            if(fechaFinal < fechaInicial){
+                alert('El intervalo de fechas no es válido. Fecha Inicial debe ser menor a Fecha Final')
+            }else{
+            if(data.error){
+                html = ""
+            }else{
           html = "";
             data.data.forEach(element => {
                 html += `<tr><td>${element.idcompra}</td>`
@@ -267,12 +292,15 @@
                 html += `<td>${element.NombreProveedor}</td>`
                 html += `<td><a href="verCompra.html?id=${element.idcompra}" class="btn btn-primary"><i class="fas fa-fw fa-eye mr-2"></i>Ver</a></td></tr>`;
             });
+        }
             document.getElementById('listaCompras').innerHTML = html
             $(document).ready( function () {
             $('#table').DataTable();
                } ); 
+            }
         })
         .catch(error=>console.log(error))       
      }
+
 
 </script>

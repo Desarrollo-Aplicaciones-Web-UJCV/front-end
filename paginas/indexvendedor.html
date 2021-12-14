@@ -137,7 +137,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Usuarios</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="divUsuarios"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-user fa-2x text-gray-300"></i>
@@ -155,7 +155,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Clientes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="divClientes"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -175,7 +175,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">5</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="divProductos"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -195,7 +195,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Ventas</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="divVentas"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -428,4 +428,15 @@
           }         
     })
   }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost/back-end/api/usuarios/get_admin_dashboard_info.php')
+    .then(response => response.json())
+    .then(data => {
+      divUsuarios.innerText = data.usuarios
+      divClientes.innerText = data.clientes
+      divProductos.innerText = data.productos
+      divVentas.innerText = data.ventas
+    })
+  })
 </script>
