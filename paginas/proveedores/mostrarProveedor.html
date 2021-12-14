@@ -37,7 +37,7 @@
         <!-- Sidebar - Brand -->
         <a
           class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="indexvendedor.html"
+          href="../indexAdministrador.html"
         >
           <div class="sidebar-brand-icon">
             <img src="../../img/logo-icono.png" />
@@ -147,12 +147,10 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span class="mr-2 d-none d-lg-inline text-white-600 small"
-                    >Eduin Flores</span
-                  >
+                  <span class="mr-2 d-none d-lg-inline text-white-600 small" id="usrSpan"></span>
                   <img
                     class="img-profile rounded-circle"
-                    src="../../img/undraw_profile.svg"
+                    src="../../img/usuario.png"
                   />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -186,9 +184,9 @@
             <div class="row">
             <div class="col-lg-12">
             <div class="form-group">
-                <h4 class="text-center">Proveedores</h4>
-		<a href="nuevoProveedor.html" class="btn btn-primary">Nuevo</a>
-    <button onclick="imprimir()" class="btn btn-primary">Imprimir</button>
+                <h4 class="text-center" style="font-size: 50px;">Proveedores</h4>
+		<a href="nuevoProveedor.html" class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i>Nuevo</a>
+    <button onclick="imprimir()" class="btn btn-primary"><i class="fas fa-fw fa-print"></i>Imprimir</button>
 		<br>
 		<br>
 			<div class="table-responsive">
@@ -270,33 +268,54 @@
 
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
+     <!-- Page level plugins -->
+     <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+     <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+ 
+     <!-- Page level custom scripts -->
+     <script src="../../js/demo/datatables-demo.js"></script>
+ </body>
   </body>
 </html>
 
 
 <script>
+  function getCurrentUser(){
+    let usuario = document.getElementById('usrSpan')
+    let opciones = {
+      method:"GET",
+      headers:{"Authorization":`${localStorage.getItem('token')}`}
+    }
+    fetch(`http://localhost/back-end/api/usuarios/read_logged_user.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        usuario.innerText = data.nombre;
+      });
+  }
+  getCurrentUser();
+
+    getData()
+
     function getData(){
         fetch("http://localhost/back-end/api/proveedores/read.php")
         .then(res=>res.json())
         .then(data=>{
+          html = "";
             data.data.forEach(element => {
-                let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` <td>${element.idproveedor}</td> 
-                                        <td>${element.nombre}</td> 
-                                        <td>${element.email}</td>
-                                        <td>${element.telefono}</td>
-                                        <td>${element.direccion}</td>
-                                        <a href="modificarProveedor.html?id=${element.idproveedor}" class="btn btn-success"><i class='fas fa-edit'></i>Editar</a>
-                                        <a onclick="eliminarProveedor(event, ${element.idproveedor})" class="btn btn-danger">Eliminar</a>
-                                        `
-                listaProveedores.appendChild(tableRow)
+              html += `<tr><td>${element.idproveedor}</td>`
+				      html += `<td>${element.nombre}</td>`
+				      html += `<td>${element.email}</td>`
+				      html += `<td>${element.telefono}</td>`
+              html += `<td>${element.direccion}</td>`
+              html += `<td><a href="modificarProveedor.html?id=${element.idproveedor}" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i>Modificar</a></td></tr>`;
             });
-
+            document.getElementById('listaProveedores').innerHTML = html
+            $(document).ready( function () {
+            $('#table').DataTable();
+               } ); 
         })
-        .catch(error=>console.log(error))      
-        
-    }
-    getData()
+        .catch(error=>console.log(error))       
+     }
 
     function eliminarProveedor(event,id){
         fetch(`http://localhost/back-end/api/proveedores/delete.php?id=${id}`).then(response => response.json()).then((data) => {

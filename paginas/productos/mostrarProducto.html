@@ -59,19 +59,47 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/ventas1.png">
-                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-                    <span>Ventas</span>
+                <a class="nav-link collapsed" href="../ventas/indexVentas.html">
+                  <img src="../../img/ventas1.png" />
+                  <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                  <span>Ventas</span>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/productos1.png">
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../productos/mostrarProducto.html">
+                    <img src="../../img/productos1.png" />
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Productos</span>
-                </a>
-            </li> 
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../clientes/mostrarCliente.html">
+                    <img src="../../img/clientes1.png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Clientes</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../proveedores/mostrarProveedor.html">
+                    <img src="../../img/inventario1.png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Proveedores</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../compras/mostrarCompras.html">
+                    <img src="../../img/carrito-de-compras.png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Compras</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../usuarios/mostrarUsuarios.html">
+                    <img src="../../img/usuario (1).png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Usuarios</span>
+                  </a>
+              </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -107,9 +135,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white-600 small">Administrador</span>
+                                <span class="mr-2 d-none d-lg-inline text-white-600 small" id="usrSpan"></span>
                                 <img class="img-profile rounded-circle"
-                                    src="../../img/undraw_profile_3.svg">
+                                src="../../img/usuario.png">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -126,37 +154,31 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Productos</h1>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <h4 class="text-center" style="font-size:50px;">Productos</h4>
+                                <a href="nuevoProducto.html"  class="btn btn-primary"><i class="fas fa-fw fa-plus-circle"></i>Nuevo</a>
+                                <button onclick="imprimir()" class="btn btn-primary"><i class="fas fa-fw fa-print"></i>Imprimir</button>
+                                <br>
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered" id="table">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Descripción</th>
+                                                <th>Precio Venta</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                    <tbody id="listaProductos">
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Begin Page Content -->
-    <!-- Inicio de Mostar -->
-        <br>
-            <a href="nuevoProducto.html" id="boton" class="btn btn-primary">Agregar</a>
-            <button onclick="imprimir()" class="btn btn-primary">Imprimir</button>
-            <br>
-
-            <div class="row">
-		        <div class="col-lg-12">
-			        <div class="table-responsive">
-				        <table class="table table-striped table-bordered" id="table">
-					        <thead class="thead-dark">
-						        <tr>
-							        <th>Id</th>
-							        <th>Descripción</th>
-                                    <th>Precio Venta</th>
-							        <th>Acciones</th>
-						        </tr>
-					        </thead>
-					    <tbody id="listaProductos">
-					    </tbody>
-                    </table>
-			    </div>
-		    </div>
-	    </div>
-    </div>
 
     <!-- End of Main Content -->
 
@@ -201,38 +223,52 @@
 
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
 
 <script>
-    
+    function getCurrentUser(){
+    let usuario = document.getElementById('usrSpan')
+    let opciones = {
+      method:"GET",
+      headers:{"Authorization":`${localStorage.getItem('token')}`}
+    }
+    fetch(`http://localhost/back-end/api/usuarios/read_logged_user.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        usuario.innerText = data.nombre;
+      });
+  }
+  getCurrentUser();
 
+
+    getData()
 
     function getData(){
         fetch("http://localhost/back-end/api/productos/read.php")
         .then(res=>res.json())
         .then(data=>{
+          html = "";
             data.data.forEach(element => {
-                console.log(data);
-                let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` 
-                                        <td>${element.idproducto}</td> 
-                                        <td>${element.descripcion}</td> 
-                                        <td>${element.precioVenta}</td>
-                                       
-                                    
-                                        <a href="modificarProducto.html?id=${element.idproducto}" class="btn btn-primary">Modificar</a>
-                                        <a onclick="eliminarProducto(event, ${element.idproducto})" class="btn btn-danger">Eliminar</a>
-                                        `
-                listaProductos.appendChild(tableRow)
+                html += `<tr><td>${element.idproducto}</td>`
+                html += `<td>${element.descripcion}</td>`
+                html += `<td>${element.precioVenta}</td>`
+                html += `<td><a href="modificarProducto.html?id=${element.idproducto}" class="btn btn-primary"><i class="fas fa-fw fa-edit"></i>Modificar</a></td></tr>`;
             });
-
+            document.getElementById('listaProductos').innerHTML = html
+            $(document).ready( function () {
+            $('#table').DataTable();
+               } ); 
         })
-        .catch(error=>console.log(error))      
-        
-    }
-    getData()
+        .catch(error=>console.log(error))       
+     }
 
     function eliminarProducto(event,id){
         fetch(`http://localhost/back-end/api/productos/delete.php?id=${id}`).then(response => response.json()).then((data) => {

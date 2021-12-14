@@ -31,7 +31,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../../index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../indexAdministrador.html">
                 <div class="sidebar-brand-icon">
                     <img src="../../img/logo-icono.png" >
                     <!-- <i class="fas fa-user"></i> -->
@@ -59,19 +59,47 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/ventas1.png">
-                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
-                    <span>Ventas</span>
+                <a class="nav-link collapsed" href="../ventas/indexVentas.html">
+                  <img src="../../img/ventas1.png" />
+                  <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                  <span>Ventas</span>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <img src="../../img/carrito-de-compras.png">
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../productos/mostrarProducto.html">
+                    <img src="../../img/productos1.png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Productos</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../clientes/mostrarCliente.html">
+                    <img src="../../img/clientes1.png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Clientes</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../proveedores/mostrarProveedor.html">
+                    <img src="../../img/inventario1.png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Proveedores</span>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../compras/mostrarCompras.html">
+                    <img src="../../img/carrito-de-compras.png" />
                     <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
                     <span>Compras</span>
-                </a>
-            </li> 
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link collapsed" href="../usuarios/mostrarUsuarios.html">
+                    <img src="../../img/usuario (1).png" />
+                    <!-- <i class="fas fa-fw fa-dollar-sign"></i> -->
+                    <span>Usuarios</span>
+                  </a>
+              </li> 
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -107,9 +135,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white-600 small">Administrador</span>
+                                <span class="mr-2 d-none d-lg-inline text-white-600 small" id="usrSpan"></span>
                                 <img class="img-profile rounded-circle"
-                                    src="../../img/undraw_profile.svg">
+                                src="../../img/usuario.png">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -127,13 +155,25 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                      <!-- Page Heading -->
-                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Compras</h1>
-                    </div>
+                     <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4"> -->
+                        <h4 class="h3 text-center" style="font-size: 50px;" >Compras</h4>
+                    <!-- </div> -->
 
                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <a href="nuevaCompra.html" class="btn btn-danger">Nueva compra</a>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-3">
+                        <a href="nuevaCompra.html" class="btn btn-danger"><i class="fas fa-fw fa-plus-circle mr-2"></i>Nueva compra</a>
+                    </div>
+                    <div class="d-sm-flex align-items-center mb-2">
+                        <div class="d-sm-flex align-items-center  mr-3">
+                            <label for="fechaInicial" class="mt-2 mr-3">Desde:</label>
+                            <input type="date" id="fechaInicial" style="width: 170px;"  class="form-control">
+                        </div>
+                        
+                        <div class="d-sm-flex align-items-center mr-3">
+                            <label for="fechaFinal" class="mt-2 mr-3">Hasta:</label>
+                            <input type="date" id="fechaFinal" style="width: 170px;" class="form-control" >
+                        </div>
+                        <button class="btn btn-primary" onclick="getData()"><i class="fas fa-clipboard-list mr-2"></i>Listar</button>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
@@ -197,30 +237,70 @@
 
     <!-- Page level plugins -->
     <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
 <script>
-    function getData(){
-        fetch("http://localhost/back-end/api/compras/read_head.php")
+    document.addEventListener('DOMContentLoaded', () => {
+       let date = new Date()
+       console.log(date)
+       document.getElementById('fechaInicial').value = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+       document.getElementById('fechaFinal').value = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+
+    });
+
+    function getCurrentUser(){
+    let usuario = document.getElementById('usrSpan')
+    let opciones = {
+      method:"GET",
+      headers:{"Authorization":`${localStorage.getItem('token')}`}
+    }
+    fetch(`http://localhost/back-end/api/usuarios/read_logged_user.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        usuario.innerText = data.nombre;
+      });
+  }
+  getCurrentUser();
+
+
+
+function getData(){
+        let fechaInicial = document.getElementById('fechaInicial').value
+        let fechaFinal = document.getElementById('fechaFinal').value
+        fetch(`http://localhost/back-end/api/compras/read_head.php?initDate=${fechaInicial}&endDate=${fechaFinal}`)
         .then(res=>res.json())
         .then(data=>{
+            if(fechaFinal < fechaInicial){
+                alert('El intervalo de fechas no es válido. Fecha Inicial debe ser menor a Fecha Final')
+            }else{
+            if(data.error){
+                html = ""
+            }else{
+          html = "";
             data.data.forEach(element => {
-                let tableRow = document.createElement('tr')
-                tableRow.innerHTML =  ` <td>${element.idcompra}</td> 
-                                        <td>${element.fechaHora}</td>
-                                        <td>${element.total}</td>
-                                        <td>${element.NombreUsuario}</td>
-                                        <td>${element.NombreProveedor}</td>
-                                        <a href="verCompra.html?id=${element.idcompra}" class="btn btn-primary">Ver</a>
-                                        `
-                listaCompras.appendChild(tableRow)
+                html += `<tr><td>${element.idcompra}</td>`
+                html += `<td>${element.fechaHora}</td>`
+                html += `<td>${element.total}</td>`
+                html += `<td>${element.NombreUsuario}</td>`
+                html += `<td>${element.NombreProveedor}</td>`
+                html += `<td><a href="verCompra.html?id=${element.idcompra}" class="btn btn-primary"><i class="fas fa-fw fa-eye mr-2"></i>Ver</a></td></tr>`;
             });
-
+        }
+            document.getElementById('listaCompras').innerHTML = html
+            $(document).ready( function () {
+            $('#table').DataTable();
+               } ); 
+            }
         })
-        .catch(error=>console.log(error))      
-        
-    }
-    getData();
+        .catch(error=>console.log(error))       
+     }
+
 
 </script>

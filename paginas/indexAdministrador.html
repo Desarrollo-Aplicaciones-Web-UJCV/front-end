@@ -159,7 +159,7 @@
                   >
                   <img
                     class="img-profile rounded-circle"
-                    src="../img/undraw_profile_3.svg"
+                    src="../img/usuario.png"
                   />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -215,8 +215,8 @@
                         >
                           Usuarios
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          4
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="divUsuarios">
+                          
                         </div>
                       </div>
                       <div class="col-auto">
@@ -243,8 +243,8 @@
                         >
                           Clientes
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          5
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="divClientes">
+                          
                         </div>
                       </div>
                       <div class="col-auto">
@@ -281,8 +281,9 @@
                                 font-weight-bold
                                 text-gray-800
                               "
+                              id="divProductos"
                             >
-                              5
+                              
                             </div>
                           </div>
                         </div>
@@ -313,8 +314,8 @@
                         >
                           Ventas
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          18
+                        <div class="h5 mb-0 font-weight-bold text-gray-800" id="divVentas">
+                          
                         </div>
                       </div>
                       <div class="col-auto">
@@ -356,15 +357,15 @@
                       <form action="" method=" post" name="frmChangePass" id="frmChangePass" class="p-3" >
                         <div class="form-group">
                           <label>Contraseña Actual</label>
-                          <input type="password" name="actual" id="actual" required class="form-control"/>
+                          <input type="password" name="actual" id="actual" required class="form-control" required/>
                         </div>
                         <div class="form-group">
                           <label>Nueva Contraseña</label>
-                          <input type="password" name="nueva" id="nueva" required class="form-control"/>
+                          <input type="password" name="nueva" id="nueva" required class="form-control" required/>
                         </div>
                         <div class="form-group">
                           <label>Confirmar Contraseña</label>
-                          <input type="password" name="confirmar" id="confirmar" required class="form-control"/>
+                          <input type="password" name="confirmar" id="confirmar" required class="form-control" required/>
                         </div>
                         <div class="alertChangePass" style="display: none"></div>
                         <div>
@@ -386,37 +387,33 @@
                     <div class="p-3">
                       <div class="form-group">
                         <strong>RTN:</strong>
-                        <input type="text" name="rtn" id="rtn" class="form-control" maxLength="14" pattern="\d*" required>
+                        <input type="text" name="rtn" id="rtn" class="form-control" maxLength="14" pattern="\d*" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Nombre:</strong>
-                        <input type="text" name="nombre" id="nombre" class="form-control" maxlength="25" required>
+                        <input type="text" name="nombre" id="nombre" class="form-control" maxlength="25" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Razón Social:</strong>
-                        <input type="text" name="razonsocial" id="razonsocial" class="form-control" maxlength="30" required>
+                        <input type="text" name="razonsocial" id="razonsocial" class="form-control" maxlength="30" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Teléfono:</strong>
-                        <input type="text" name="telefono" id="telefono" class="form-control" maxlength="8" pattern="\d*" required>
+                        <input type="text" name="telefono" id="telefono" class="form-control" maxlength="8" pattern="\d*" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Correo Electrónico:</strong>
-                        <input type="email" name="email" id="email" class="form-control" required>
+                        <input type="email" name="email" id="email" class="form-control" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>Dirección:</strong>
-                        <input type="text" name="direccion" id="direccion" class="form-control" maxlength="50" required>
+                        <input type="text" name="direccion" id="direccion" class="form-control" maxlength="50" required disabled>
                       </div>
                       <div class="form-group">
                         <strong>ISV (%):</strong>
-                        <input type="text" name="igv" id="igv" class="form-control" maxlength="4" pattern="[\d.]*" required>
+                        <input type="text" name="igv" id="igv" class="form-control" maxlength="4" pattern="[\d.]*" required disabled>
                       </div>
-                      <div>
-                        <button type="submit" class="btn btn-primary btnChangePass">
-                          Guardar Datos
-                        </button>
-                      </div>
+                  
                     </div>
                   </div>
                 </form>
@@ -607,16 +604,6 @@
   
   }
     
-  
-  // function getUserCount(){
-  //   let cuentaUsuarios = document.getElementById("countUsuarios")
-  //     fetch(`http://localhost/back-end/api/usuarios/get_user_count.php`)
-  //     .then(res=>res.json())
-  //     .then(data=>{
-  //       cuentaUsuarios.innerText = data.count;
-  //     });
-  // }
-  // getUserCount();
 
   function getCurrentUser(){
     let usuario = document.getElementById('usrSpan')
@@ -654,15 +641,28 @@
       method:"POST",
       body : JSON.stringify(datos)
     }
-    fetch(`localhost/back-end/api/usuarios/change_pass.php`,opciones)
+    fetch(`http://localhost/back-end/api/usuarios/change_pass.php`,opciones)
     .then(response=>response.json())
     .then(data=>{ 
-        if (data.code === 0){
+        if (data.code == 0){
             alert("Contraseña actualizada");
+            frmChangePass.reset();
           }else{
-            alert("Error al actualizar la contraseña");
+            alert(data.error.message);
           }         
     })
   }
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost/back-end/api/usuarios/get_admin_dashboard_info.php')
+    .then(response => response.json())
+    .then(data => {
+      divUsuarios.innerText = data.usuarios
+      divClientes.innerText = data.clientes
+      divProductos.innerText = data.productos
+      divVentas.innerText = data.ventas
+    })
+  })
 
 </script>

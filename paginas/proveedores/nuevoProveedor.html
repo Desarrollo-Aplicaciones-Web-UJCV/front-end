@@ -37,7 +37,7 @@
         <!-- Sidebar - Brand -->
         <a
           class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="indexvendedor.html"
+          href="../indexAdministrador.html"
         >
           <div class="sidebar-brand-icon">
             <img src="../../img/logo-icono.png" />
@@ -147,12 +147,11 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span class="mr-2 d-none d-lg-inline text-white-600 small"
-                    >Eduin Flores</span
+                  <span class="mr-2 d-none d-lg-inline text-white-600 small" id="usrSpan"></span
                   >
                   <img
                     class="img-profile rounded-circle"
-                    src="../../img/undraw_profile.svg"
+                    src="../../img/usuario.png"
                   />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -295,6 +294,20 @@
 
 
 <script>
+  function getCurrentUser(){
+    let usuario = document.getElementById('usrSpan')
+    let opciones = {
+      method:"GET",
+      headers:{"Authorization":`${localStorage.getItem('token')}`}
+    }
+    fetch(`http://localhost/back-end/api/usuarios/read_logged_user.php`,opciones)
+      .then(res=>res.json())
+      .then(data=>{
+        usuario.innerText = data.nombre;
+      });
+  }
+  getCurrentUser();
+  
 formAgregar.addEventListener('submit',(target)=>{
     target.preventDefault()
     let rtn = document.getElementById('idproveedor').value
